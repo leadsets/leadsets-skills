@@ -10,6 +10,13 @@
       "enrich_company"
     ],
     "summary": "Reads a company's site and returns a one-page brief: what they sell, to whom, and angles to open with.",
+    "connections": [
+      "CSV",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/account-research-brief",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/account-research-brief",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/account-research-brief.zip"
@@ -25,6 +32,18 @@
       "scrape_company"
     ],
     "summary": "Scores an account list against your ICP and sorts it into tiers with reasons.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "HubSpot",
+      "Salesforce",
+      "Pipedrive",
+      "Attio",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/account-tiering",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/account-tiering",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/account-tiering.zip"
@@ -40,6 +59,14 @@
       "enrich_person"
     ],
     "summary": "Fills people and company records in Attio with sourced, dated fields.",
+    "connections": [
+      "CSV",
+      "Attio",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/attio-record-enrich",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/attio-record-enrich",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/attio-record-enrich.zip"
@@ -54,6 +81,13 @@
       "enrich_person"
     ],
     "summary": "Runs large jobs asynchronously, resumes after limits refill and reports progress.",
+    "connections": [
+      "CSV",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/batch-job-runner",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/batch-job-runner",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/batch-job-runner.zip"
@@ -66,9 +100,17 @@
     "tools": [
       "get_usage",
       "enrich_person",
-      "verify_email"
+      "verify_email",
+      "search_companies"
     ],
     "summary": "Returns the best verified work email for one person, or says honestly that there isn't one.",
+    "connections": [
+      "CSV",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/best-work-email",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/best-work-email",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/best-work-email.zip"
@@ -84,6 +126,15 @@
       "enrich_person"
     ],
     "summary": "Takes your bounced contacts and finds a current, verified email for the ones who moved.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Instantly",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/bounce-recovery",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/bounce-recovery",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/bounce-recovery.zip"
@@ -98,6 +149,15 @@
       "enrich_person"
     ],
     "summary": "Enriches a whole file as an async job, checking your limits before each batch.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Excel",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/bulk-enrich-csv",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/bulk-enrich-csv",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/bulk-enrich-csv.zip"
@@ -113,6 +173,17 @@
       "enrich_person"
     ],
     "summary": "Finds the missing stakeholders on an open deal and adds them to the account.",
+    "connections": [
+      "CSV",
+      "HubSpot",
+      "Salesforce",
+      "Pipedrive",
+      "Attio",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/buying-committee-mapper",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/buying-committee-mapper",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/buying-committee-mapper.zip"
@@ -127,6 +198,14 @@
       "scrape_jobs"
     ],
     "summary": "Turns a careers page into title, team, location and date for every open role.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/careers-to-jobs",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/careers-to-jobs",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/careers-to-jobs.zip"
@@ -141,6 +220,17 @@
       "verify_email"
     ],
     "summary": "Separates catch-all domains so you can warm them at lower volume instead of dropping them.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "LinkedCamp",
+      "Instantly",
+      "Smartlead",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/catch-all-segmenter",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/catch-all-segmenter",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/catch-all-segmenter.zip"
@@ -155,6 +245,13 @@
       "enrich_person"
     ],
     "summary": "Spots past champions who moved to a new company, so you reach them in their first 90 days.",
+    "connections": [
+      "CSV",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/champion-tracker",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/champion-tracker",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/champion-tracker.zip"
@@ -169,6 +266,13 @@
       "enrich_person"
     ],
     "summary": "Calls Leadsets from a Clay HTTP column to fill emails and roles across a table.",
+    "connections": [
+      "Clay",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/clay-http-enrich",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/clay-http-enrich",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/clay-http-enrich.zip"
@@ -185,6 +289,14 @@
       "search_people"
     ],
     "summary": "Lists companies that posted SDR or BDR roles recently, with their sales leaders.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/companies-hiring-sdrs",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/companies-hiring-sdrs",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/companies-hiring-sdrs.zip"
@@ -200,6 +312,14 @@
       "search_people"
     ],
     "summary": "Pulls the customer logos and case studies a competitor publishes, then finds contacts there.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/competitor-customer-finder",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/competitor-customer-finder",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/competitor-customer-finder.zip"
@@ -215,6 +335,15 @@
       "enrich_person"
     ],
     "summary": "Turns an account list into ranked contacts per account, with optional enrichment.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Salesforce",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/contacts-at-target-accounts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/contacts-at-target-accounts",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/contacts-at-target-accounts.zip"
@@ -230,6 +359,15 @@
       "verify_email"
     ],
     "summary": "Audits any list for duplicates, stale titles and risky emails, with a fix list.",
+    "connections": [
+      "CSV",
+      "Excel",
+      "HubSpot",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/data-quality-check",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/data-quality-check",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/data-quality-check.zip"
@@ -245,6 +383,14 @@
       "search_people"
     ],
     "summary": "Turns one domain into a ranked list of the people who buy what you sell.",
+    "connections": [
+      "CSV",
+      "HubSpot",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/decision-makers-at-company",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/decision-makers-at-company",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/decision-makers-at-company.zip"
@@ -259,6 +405,15 @@
       "enrich_person"
     ],
     "summary": "Merges several lists into one, resolving duplicates by person and company.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "HubSpot",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/dedupe-merge",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/dedupe-merge",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/dedupe-merge.zip"
@@ -274,6 +429,13 @@
       "enrich_person"
     ],
     "summary": "Goes from name plus company to contact data, no LinkedIn URL needed.",
+    "connections": [
+      "CSV",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/enrich-by-name",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/enrich-by-name",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/enrich-by-name.zip"
@@ -288,6 +450,15 @@
       "enrich_company"
     ],
     "summary": "Adds industry, headcount band, location and stack to a list of domains.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Attio",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/enrich-company-domains",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/enrich-company-domains",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/enrich-company-domains.zip"
@@ -302,6 +473,15 @@
       "enrich_person"
     ],
     "summary": "Returns current role, company and a verified work email for one profile URL or a batch.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Instantly",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/enrich-from-linkedin",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/enrich-from-linkedin",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/enrich-from-linkedin.zip"
@@ -317,6 +497,17 @@
       "scrape_jobs"
     ],
     "summary": "Writes one specific, true opening line per prospect from their company's site and hiring.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "LinkedCamp",
+      "Instantly",
+      "Smartlead",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/first-line-writer",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/first-line-writer",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/first-line-writer.zip"
@@ -332,6 +523,14 @@
       "search_people"
     ],
     "summary": "Finds companies hiring for roles that predict they need what you sell, and who to contact.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/hiring-signal-finder",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hiring-signal-finder",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hiring-signal-finder.zip"
@@ -346,6 +545,13 @@
       "scrape_jobs"
     ],
     "summary": "Reads job descriptions and turns them into the likely pain and a matching message angle.",
+    "connections": [
+      "CSV",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/hiring-to-pain",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hiring-to-pain",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hiring-to-pain.zip"
@@ -360,6 +566,14 @@
       "scrape_company"
     ],
     "summary": "Turns a homepage into products, audience, proof points and key links.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/homepage-to-profile",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/homepage-to-profile",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/homepage-to-profile.zip"
@@ -374,6 +588,14 @@
       "enrich_company"
     ],
     "summary": "Fills empty industry, size and location fields on HubSpot companies.",
+    "connections": [
+      "CSV",
+      "HubSpot",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/hubspot-company-enrich",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hubspot-company-enrich",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hubspot-company-enrich.zip"
@@ -389,6 +611,14 @@
       "verify_email"
     ],
     "summary": "Finds contacts with missing or bounced emails and writes verified addresses back.",
+    "connections": [
+      "CSV",
+      "HubSpot",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/hubspot-email-backfill",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hubspot-email-backfill",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hubspot-email-backfill.zip"
@@ -403,6 +633,13 @@
       "search_companies"
     ],
     "summary": "Interviews you for five minutes, then saves your ICP as reusable Leadsets filters.",
+    "connections": [
+      "Google Sheets",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/icp-builder",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/icp-builder",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/icp-builder.zip"
@@ -418,6 +655,14 @@
       "enrich_person"
     ],
     "summary": "Scores any account or contact list against your ICP and explains each score.",
+    "connections": [
+      "CSV",
+      "HubSpot",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/icp-fit-scoring",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/icp-fit-scoring",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/icp-fit-scoring.zip"
@@ -432,6 +677,14 @@
       "enrich_person"
     ],
     "summary": "Re-checks a contact list and flags everyone who changed role or company.",
+    "connections": [
+      "CSV",
+      "HubSpot",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/job-change-detector",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/job-change-detector",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/job-change-detector.zip"
@@ -446,6 +699,18 @@
       "verify_email"
     ],
     "summary": "Verifies every address and returns send-safe, catch-all, unknown and invalid segments.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Excel",
+      "LinkedCamp",
+      "Instantly",
+      "Smartlead",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/list-cleaner",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/list-cleaner",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/list-cleaner.zip"
@@ -461,6 +726,14 @@
       "search_companies"
     ],
     "summary": "Starts from your best customers and finds companies that look like them.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/lookalike-accounts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/lookalike-accounts",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/lookalike-accounts.zip"
@@ -477,6 +750,15 @@
       "verify_email"
     ],
     "summary": "Runs a saved ICP for each agency client and delivers one clean list per client.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "LinkedCamp",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/multi-client-icp-runner",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/multi-client-icp-runner",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/multi-client-icp-runner.zip"
@@ -492,6 +774,20 @@
       "enrich_company"
     ],
     "summary": "Enriches every new form fill in n8n and routes good-fit leads to sales.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "HubSpot",
+      "Salesforce",
+      "Pipedrive",
+      "Attio",
+      "n8n",
+      "Slack",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/n8n-inbound-enrich",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/n8n-inbound-enrich",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/n8n-inbound-enrich.zip"
@@ -507,6 +803,14 @@
       "enrich_person"
     ],
     "summary": "Turns a list of names and companies (event attendees, webinar sign-ups) into enriched contacts.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/names-to-prospects",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/names-to-prospects",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/names-to-prospects.zip"
@@ -522,6 +826,14 @@
       "enrich_person"
     ],
     "summary": "Watches target accounts for new VP and C-level hires, the classic buying trigger.",
+    "connections": [
+      "CSV",
+      "Slack",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/new-leader-alerts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/new-leader-alerts",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/new-leader-alerts.zip"
@@ -539,6 +851,15 @@
       "verify_email"
     ],
     "summary": "Defines your ICP, finds matching people, enriches and verifies them, and exports a send-ready list.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "LinkedCamp",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/outbound-prospect-list",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/outbound-prospect-list",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/outbound-prospect-list.zip"
@@ -554,6 +875,16 @@
       "enrich_company"
     ],
     "summary": "Turns a public partner or integrations directory into an enriched account list.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "HubSpot",
+      "Attio",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/partner-directory-accounts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/partner-directory-accounts",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/partner-directory-accounts.zip"
@@ -569,6 +900,14 @@
       "enrich_company"
     ],
     "summary": "Enriches new Pipedrive leads with role, company and a verified email.",
+    "connections": [
+      "CSV",
+      "Pipedrive",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/pipedrive-lead-enrich",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/pipedrive-lead-enrich",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/pipedrive-lead-enrich.zip"
@@ -583,6 +922,14 @@
       "scrape_company"
     ],
     "summary": "Summarizes a company's products, pricing model and ideal customer from its own pages.",
+    "connections": [
+      "CSV",
+      "Slack",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/positioning-snapshot",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/positioning-snapshot",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/positioning-snapshot.zip"
@@ -597,6 +944,16 @@
       "verify_email"
     ],
     "summary": "Runs a final verification on a loaded campaign and pauses risky contacts before launch.",
+    "connections": [
+      "CSV",
+      "LinkedCamp",
+      "Instantly",
+      "Smartlead",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/pre-send-check",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/pre-send-check",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/pre-send-check.zip"
@@ -612,6 +969,14 @@
       "enrich_person"
     ],
     "summary": "Sends a verified prospect list straight into a LinkedCamp campaign as leads.",
+    "connections": [
+      "CSV",
+      "LinkedCamp",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/push-to-linkedcamp",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/push-to-linkedcamp",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/push-to-linkedcamp.zip"
@@ -626,6 +991,15 @@
       "verify_email"
     ],
     "summary": "Loads verified, segmented contacts into your email sequencer with custom fields.",
+    "connections": [
+      "CSV",
+      "Instantly",
+      "Smartlead",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/push-to-sequencer",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/push-to-sequencer",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/push-to-sequencer.zip"
@@ -641,6 +1015,15 @@
       "search_people"
     ],
     "summary": "Flags info@, sales@ and other shared inboxes, and finds a named person behind each.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Instantly",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/role-address-filter",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/role-address-filter",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/role-address-filter.zip"
@@ -655,6 +1038,14 @@
       "enrich_person"
     ],
     "summary": "Refreshes titles and seniority on Salesforce contacts and logs every change.",
+    "connections": [
+      "CSV",
+      "Salesforce",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/salesforce-title-refresh",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/salesforce-title-refresh",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/salesforce-title-refresh.zip"
@@ -669,6 +1060,13 @@
       "search_people"
     ],
     "summary": "Finds people by title, function, seniority, location, company size and industry, with match reasons.",
+    "connections": [
+      "CSV",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/search-b2b-prospects",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/search-b2b-prospects",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/search-b2b-prospects.zip"
@@ -684,6 +1082,14 @@
       "enrich_person"
     ],
     "summary": "Posts new hiring and leadership signals on your target accounts to a Slack channel.",
+    "connections": [
+      "CSV",
+      "Slack",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/signal-slack-alerts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/signal-slack-alerts",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/signal-slack-alerts.zip"
@@ -698,6 +1104,21 @@
       "enrich_person"
     ],
     "summary": "Flags contacts whose title or company is out of date before reps waste a sequence on them.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "HubSpot",
+      "Salesforce",
+      "Pipedrive",
+      "Attio",
+      "LinkedCamp",
+      "Instantly",
+      "Smartlead",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/stale-record-audit",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/stale-record-audit",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/stale-record-audit.zip"
@@ -714,6 +1135,14 @@
       "verify_email"
     ],
     "summary": "Reads a public team page, then finds and verifies the people listed on it.",
+    "connections": [
+      "CSV",
+      "Google Sheets",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/team-page-to-contacts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/team-page-to-contacts",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/team-page-to-contacts.zip"
@@ -727,6 +1156,13 @@
       "get_usage"
     ],
     "summary": "Checks remaining limits and splits big jobs across windows so runs never stall halfway.",
+    "connections": [
+      "CSV",
+      "Claude",
+      "ChatGPT",
+      "Cursor"
+    ],
+    "author": "Leadsets team",
     "path": "skills/usage-planner",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/usage-planner",
     "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/usage-planner.zip"

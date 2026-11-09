@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=usage-planner
 ---
 
 # Usage planner
@@ -20,8 +20,20 @@ Turns a big job, like enriching a 4,000-row CSV or searching for 2,000 prospects
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=usage-planner)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=usage-planner)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -53,7 +65,7 @@ Turns a big job, like enriching a 4,000-row CSV or searching for 2,000 prospects
 6. **Re-check between batches** · `get_usage`
    Before each batch, call get_usage again (it costs nothing) or read the usage object on the last response. If actual spend ran lower than estimated, pull the next batch forward; if higher, shrink it. Tell the runner to send an Idempotency-Key on every paid call so retries never count twice.
 7. **Set the error playbook**
-   Include in the plan: on 429 window_full, wait Retry-After seconds and retry with the same Idempotency-Key; on 429 too_many_concurrent, wait for a running search to finish; on 429 weekly_limit, pause until resets_at or move to an async job; on 402, 400, 401, 403 or 409, stop and report instead of retrying; on 404 not_found, skip the row and move on. Blocked calls count against nothing.
+   Include in the plan: on 429 window_full, wait Retry-After seconds and retry with the same Idempotency-Key (REST API); on 429 too_many_concurrent, wait for a running search to finish; on 429 weekly_limit, pause until resets_at or move to an async job; on 402, 400, 401, 403 or 409, stop and report instead of retrying; on 404 not_found, skip the row and move on. Blocked calls count against nothing.
 8. **Return the plan**
    Output the meter snapshot, the estimate, the batch table and any hard stops, then hand the plan to the skill or user that will run the job.
 

@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, search_people]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=search-b2b-prospects
 ---
 
 # Search B2B prospects
@@ -20,8 +20,20 @@ Turns a plain-language persona into Leadsets people filters and returns a ranked
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=search-b2b-prospects)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=search-b2b-prospects)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -50,7 +62,7 @@ Turns a plain-language persona into Leadsets people filters and returns a ranked
 4. **Run the search and page through results** · `search_people`
    Call search_people with the confirmed filters and limit up to 100 per call (default is 25). Pass next_cursor as cursor for the next page until the target count is reached or next_cursor is empty. Run pages one after another, staying under the plan's concurrent search cap. Send an Idempotency-Key on each call so a retry never counts records twice. Read the usage object on every response and stop early if the window is nearly full.
 5. **Handle errors without wasting records**
-   On 429 window_full or too_many_concurrent, wait the Retry-After seconds and retry with the same Idempotency-Key. On 429 weekly_limit, stop and report resets_at. On 400 invalid_request, fix the named filter. On 402 free_records_exhausted, stop and tell the user the free records are used up. Do not retry 401 or 403.
+   On 429 window_full or too_many_concurrent, wait the Retry-After seconds and retry with the same Idempotency-Key (REST API). On 429 weekly_limit, stop and report resets_at. On 400 invalid_request, fix the named filter. On 402 free_records_exhausted, stop and tell the user the free records are used up. Do not retry 401 or 403.
 6. **Clean and rank the results**
    Remove duplicates by person_id. Rank by match_score where present, then by how many filters appear in match_reasons. Keep each email exactly as labelled by Leadsets (verified, catch-all, unknown) with its checked_at date, and never upgrade a label.
 7. **Return the table and a short summary**

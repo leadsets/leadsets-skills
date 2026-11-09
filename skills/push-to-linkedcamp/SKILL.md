@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, search_people, enrich_person]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=push-to-linkedcamp
 ---
 
 # Push a list to LinkedCamp
@@ -20,8 +20,20 @@ Takes an ICP or an existing list of people, confirms each one is still in the ro
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=push-to-linkedcamp)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=push-to-linkedcamp)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -47,7 +59,7 @@ Takes an ICP or an existing list of people, confirms each one is still in the ro
 3. **Probe the filters with one record** · `search_people`
    Only when starting from an ICP. Call search_people with the mapped filters (title, seniority, function, employees, industry, country) and limit 1. Check that the returned person and match_reasons fit the ICP. If the result is empty or off-target, adjust the filters and probe again before spending more records.
 4. **Find the people** · `search_people`
-   Call search_people with the confirmed filters, limit up to 100 per page, paging with next_cursor until about 1.3x the target count is reached to allow for drop-off. Set has_verified_email to true when the user wants verified-only leads. Respect the plan's concurrent search cap; on 429 too_many_concurrent or window_full, wait for Retry-After and retry with the same Idempotency-Key. For a supplied list, use search_people with title and company_domain only to locate people that lack a LinkedIn URL.
+   Call search_people with the confirmed filters, limit up to 100 per page, paging with next_cursor until about 1.3x the target count is reached to allow for drop-off. Set has_verified_email to true when the user wants verified-only leads. Respect the plan's concurrent search cap; on 429 too_many_concurrent or window_full, wait for Retry-After and retry with the same Idempotency-Key (REST API). For a supplied list, use search_people with title and company_domain only to locate people that lack a LinkedIn URL.
 5. **Enrich each person** · `enrich_person`
    Call enrich_person for every person, with an Idempotency-Key per person. Keep current role, company, domain, work_email with status and confidence, and checked_at. Emails from enrich_person are already verified, so no separate verify_email call is needed. On 404 not_found record the person as no match and move on; on 402 free_records_exhausted stop and ask the user to upgrade; on 429 weekly_limit stop and report what is left to do.
 6. **Segment and dedupe**
@@ -84,7 +96,7 @@ Illustrative output.
 
 ## Cost and limits
 
-search_people uses 1 search record per person returned and enrich_person 1 enrichment record per person returned; the email it returns is already verified at no extra cost. Empty results and errors use no records, but every call counts as a request. The probe costs at most 1 search record and get_usage costs nothing. On the free plan the 1,000 one-time records are shared by search and enrichment, so a 50-lead run uses about 130. On paid plans the skill checks get_usage first, stays under the plan's concurrent search cap, retries 429 window_full after Retry-After with the same Idempotency-Key so nothing is counted twice, and splits large lists across windows. No scrape units are used.
+search_people uses 1 search record per person returned and enrich_person 1 enrichment record per person returned; the email it returns is already verified at no extra cost. Empty results and errors use no records, but every call counts as a request. The probe costs at most 1 search record and get_usage costs nothing. On the free plan the 1,000 one-time records are shared by search and enrichment, so a 50-lead run uses about 130. On paid plans the skill checks get_usage first, stays under the plan's concurrent search cap, retries 429 window_full after Retry-After with the same Idempotency-Key (REST API) so nothing is counted twice, and splits large lists across windows. No scrape units are used.
 
 ## What it doesn't do
 

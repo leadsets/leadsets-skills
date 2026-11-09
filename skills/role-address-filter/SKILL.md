@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, verify_email, search_people]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=role-address-filter
 ---
 
 # Role-address filter
@@ -20,8 +20,20 @@ Takes a contact list full of info@, sales@ and hello@ addresses and returns one 
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=role-address-filter)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=role-address-filter)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -45,7 +57,7 @@ Takes a contact list full of info@, sales@ and hello@ addresses and returns one 
 2. **Check limits and plan the run** · `get_usage`
    Call get_usage (free). verify_email counts toward enrichment at 1 per email; search_people uses 1 search record per person returned. Estimate: enrichment needed = total unique emails; search needed = flagged domains x people per company. If either exceeds what is left in the five-hour window or week, tell the user, then split the run into batches or offer to verify the role addresses only. On the free plan, remember both draw from the same 1,000 one-time records.
 3. **Verify every address** · `verify_email`
-   Call verify_email on all unique emails, role and personal alike, in batches. Record status (verified, catch-all, unknown, invalid), confidence and checked date per address. The first waterfall step also checks role and disposable addresses, so keep any role signal it returns alongside your own flag. For large lists on a paid plan, submit a bulk async job and poll it rather than looping single calls. On 429 window_full, wait for Retry-After and retry with the same Idempotency-Key; on 402 free_records_exhausted, stop and ask the user to upgrade.
+   Call verify_email on all unique emails, role and personal alike, in batches. Record status (verified, catch-all, unknown, invalid), confidence and checked date per address. The first waterfall step also checks role and disposable addresses, so keep any role signal it returns alongside your own flag. For large lists on a paid plan, submit a bulk async job and poll it rather than looping single calls. On 429 window_full, wait for Retry-After and retry with the same Idempotency-Key (REST API); on 402 free_records_exhausted, stop and ask the user to upgrade.
 4. **Probe the people search** · `search_people`
    Take one flagged domain and call search_people with company_domain set to that domain, the mapped function and seniority, and limit 1. Confirm the result is at the right company and that match_reasons reflect the role you asked for. If it returns nothing, widen seniority (add manager or c_level) before running the full set, and note that the empty probe used no records.
 5. **Find a named person behind each inbox** · `search_people`

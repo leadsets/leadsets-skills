@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, search_people, enrich_person]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=enrich-by-name
 ---
 
 # Find and enrich by name
@@ -20,8 +20,20 @@ Takes a name and company, or a list of them, and returns each person's current r
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=enrich-by-name)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=enrich-by-name)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -46,7 +58,7 @@ Takes a name and company, or a list of them, and returns each person's current r
 3. **Probe with one person** · `search_people`
    For the first person, call search_people with company_domain set to their domain, title set to the title hint if given, and limit 1. Confirm the filters return data and that the response shape and usage object look right before running the rest. An empty result costs 0 records.
 4. **Find each person at their company** · `search_people`
-   For each person, call search_people with company_domain and, when known, title (fuzzy-matched) or function and seniority. Use limit 25 and follow next_cursor for at most one more page. search_people has no name filter, so match full_name in the results yourself: exact match first, then common variants (Mike/Michael, middle initials). If two results match, keep both and flag the row as ambiguous. If nothing matches, mark the row not found and move on. Respect concurrent search limits; on 429 too_many_concurrent or window_full, wait for Retry-After and retry with the same Idempotency-Key.
+   For each person, call search_people with company_domain and, when known, title (fuzzy-matched) or function and seniority. Use limit 25 and follow next_cursor for at most one more page. search_people has no name filter, so match full_name in the results yourself: exact match first, then common variants (Mike/Michael, middle initials). If two results match, keep both and flag the row as ambiguous. If nothing matches, mark the row not found and move on. Respect concurrent search limits; on 429 too_many_concurrent or window_full, wait for Retry-After and retry with the same Idempotency-Key (REST API).
 5. **Enrich each matched person** · `enrich_person`
    Call enrich_person for every confirmed match. Record current role, company, work email, email status, confidence and checked_at. Emails from enrich_person are already verified, so do not call verify_email again. On 404 not_found, mark the row no email and move on; do not retry.
 6. **Compare and report**
@@ -80,6 +92,12 @@ Illustrative output.
 ## Cost and limits
 
 search_people uses 1 search record per person returned, so each lookup costs up to the page size (25 by default) and an empty search costs 0 records but still 1 request. enrich_person uses 1 enrichment record per matched person, and its emails are already verified at no extra charge. Records count only when data comes back. The skill calls get_usage first (free), narrows searches with title or function to keep pages small, caps paging at two pages per person, and splits long lists across five-hour windows. It works on the free plan's 1,000 one-time records and uses no scrape units.
+
+## Edge cases
+
+- **The row already has a LinkedIn URL:** that's a confirmed identity. Call `enrich_person` with the URL directly and note "matched by LinkedIn URL" in match_note; skip the name search for that row.
+- **The name search returns other people at the domain:** keep only an exact full-name match (allowing a middle initial). If none, mark the row "not found". Don't enrich a different person.
+- **Report the cost exactly:** search records equal the number of people the searches returned, so use `limit: 5` for name lookups and read the usage object.
 
 ## What it doesn't do
 

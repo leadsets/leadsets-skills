@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, scrape_company]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=positioning-snapshot
 ---
 
 # Positioning snapshot
@@ -20,8 +20,20 @@ Turns one domain or a short list of domains into a one-screen positioning snapsh
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=positioning-snapshot)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=positioning-snapshot)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -47,7 +59,7 @@ Turns one domain or a short list of domains into a one-screen positioning snapsh
 3. **Probe with one domain** · `scrape_company`
    Call scrape_company on the first domain only. Check that it returns products, positioning, customers named and key links, and note pages_read and units_used. Use that units_used figure to estimate the cost of the full list and tell the user before continuing if the estimate exceeds the unit budget.
 4. **Scrape the remaining domains** · `scrape_company`
-   Call scrape_company once per remaining domain. Read units_used on each response and stop before the budget is crossed. On a 429, wait for the Retry-After time and retry with the same Idempotency-Key. On 404 not_found or a domain that returns nothing usable, record it as 'no readable public pages' and move on; do not retry. On 403 forbidden, stop and report that the key does not allow scraping.
+   Call scrape_company once per remaining domain. Read units_used on each response and stop before the budget is crossed. On a 429, wait for the Retry-After time and retry with the same Idempotency-Key (REST API). On 404 not_found or a domain that returns nothing usable, record it as 'no readable public pages' and move on; do not retry. On 403 forbidden, stop and report that the key does not allow scraping.
 5. **Build the snapshot from what the pages say**
    For each company write: Sells (products in the company's own terms), Pricing model (per seat, usage-based, tiered, free tier, contact sales, or 'not stated on public pages'), Sells to (industry, size and roles the site targets), Positioning (one sentence on how it describes itself), Customers named (as listed on the site), and Key links (pricing, product, customers pages). Use only facts from the scraped pages. Never guess a price or pricing model that the pages do not show. If Your offer was given, add one 'Likely cares about' line marked as inference.
 6. **Deliver and report**

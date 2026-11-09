@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, search_people, enrich_person, verify_email]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=multi-client-icp-runner
 ---
 
 # Multi-client ICP runner
@@ -20,8 +20,20 @@ Takes the saved ICPs for every client an agency runs outbound for and turns each
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=multi-client-icp-runner)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=multi-client-icp-runner)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -54,7 +66,7 @@ Takes the saved ICPs for every client an agency runs outbound for and turns each
 6. **Verify only what needs it** · `verify_email`
    Call verify_email only for addresses that arrived without a status, or that came from a client-supplied list being merged in. Standalone verification counts toward enrichment, so skip anything enrich_person already labelled. Record the returned status (verified, catch-all, unknown, invalid) and confidence.
 7. **Handle limits mid-run** · `get_usage`
-   On 429 window_full, wait Retry-After seconds and retry with the same Idempotency-Key. On 429 weekly_limit, stop, finish the client in progress if its records are already returned, and list the clients still pending with the resets_at time. On 402 free_records_exhausted, stop and ask the user to upgrade; do not retry. Call get_usage before starting each new client.
+   On 429 window_full, wait Retry-After seconds and retry with the same Idempotency-Key (REST API). On 429 weekly_limit, stop, finish the client in progress if its records are already returned, and list the clients still pending with the resets_at time. On 402 free_records_exhausted, stop and ask the user to upgrade; do not retry. Call get_usage before starting each new client.
 8. **Deliver one list per client**
    For each client, write the list to its destination through the agent's own connection to CSV, Google Sheets or LinkedCamp. Never place two clients' contacts in the same file, sheet or campaign. Then print a run summary with per-client counts: found, enriched, verified, catch-all, unknown, no email, excluded, and any client not finished.
 

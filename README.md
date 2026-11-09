@@ -2,9 +2,9 @@
 
 Free, open-source skills that teach your AI agent how to do go-to-market work: build prospect lists, enrich and verify contacts, research accounts, watch hiring signals, keep your CRM clean and hand off to your sequencer.
 
-Each skill is a `SKILL.md` that knows which [Leadsets](https://www.leadsets.ai) tools to call, in what order, and how to check the result. They work in Claude, ChatGPT, Cursor and any agent that reads the SKILL.md standard. **50 skills** · MIT licensed.
+Each skill is a `SKILL.md` that knows which [Leadsets](https://www.leadsets.ai?utm_source=github&utm_medium=leadsets-skills&utm_campaign=readme) tools to call, in what order, and how to check the result. They work in Claude, ChatGPT, Cursor and any agent that reads the SKILL.md standard. **50 skills** · MIT licensed.
 
-Browse them on the website: [leadsets.ai/skills](https://www.leadsets.ai/skills).
+Browse them on the website: [leadsets.ai/skills](https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=readme).
 
 ## Install
 
@@ -19,7 +19,7 @@ cp -r leadsets-skills/skills/<skill-id> ~/.claude/skills/
 
 **Everything at once:** [dist/leadsets-skills.zip](dist/leadsets-skills.zip)
 
-Skills call Leadsets through its remote MCP server, `https://mcp.leadsets.ai` ([connect your agent](https://www.leadsets.ai/docs/mcp)). The free plan includes 1,000 records, no card: [get a key](https://www.leadsets.ai/signup).
+Skills call Leadsets through its remote MCP server, `https://mcp.leadsets.ai` ([connect your agent](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=readme)). The free plan includes 1,000 records, no card: [get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=readme).
 
 ## Skills
 
@@ -41,7 +41,7 @@ Skills call Leadsets through its remote MCP server, `https://mcp.leadsets.ai` ([
 
 | Skill | What it does | Tools | Download |
 | --- | --- | --- | --- |
-| [Best work email for a person](skills/best-work-email) | Returns the best verified work email for one person, or says honestly that there isn't one. | `get_usage` `enrich_person` `verify_email` | [zip](dist/best-work-email.zip) |
+| [Best work email for a person](skills/best-work-email) | Returns the best verified work email for one person, or says honestly that there isn't one. | `get_usage` `enrich_person` `verify_email` `search_companies` | [zip](dist/best-work-email.zip) |
 | [Bulk enrich a CSV](skills/bulk-enrich-csv) | Enriches a whole file as an async job, checking your limits before each batch. | `get_usage` `enrich_person` | [zip](dist/bulk-enrich-csv.zip) |
 | [Find and enrich by name](skills/enrich-by-name) | Goes from name plus company to contact data, no LinkedIn URL needed. | `get_usage` `search_people` `enrich_person` | [zip](dist/enrich-by-name.zip) |
 | [Enrich companies from domains](skills/enrich-company-domains) | Adds industry, headcount band, location and stack to a list of domains. | `get_usage` `enrich_company` | [zip](dist/enrich-company-domains.zip) |

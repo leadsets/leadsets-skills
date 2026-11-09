@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, scrape_company, enrich_company]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=partner-directory-accounts
 ---
 
 # Partner directory to account list
@@ -20,8 +20,20 @@ Turns a public partner or integrations directory into a clean account list with 
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=partner-directory-accounts)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=partner-directory-accounts)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -84,7 +96,7 @@ Illustrative output.
 
 ## Cost and limits
 
-scrape_company uses 1 scrape unit per standard page read, with capped page depth so one directory is a predictable number of units; scraping is an add-on on paid plans and not available on Free. enrich_company uses 1 enrichment record per company returned with data; a not_found result uses no records but counts as one request. The skill calls get_usage (free) before starting, reads the usage object on every response, splits runs that would cross the five-hour or weekly enrichment limit, and retries 429 window_full only after Retry-After with the same Idempotency-Key so nothing is counted twice.
+scrape_company uses 1 scrape unit per standard page read, with capped page depth so one directory is a predictable number of units; scraping is an add-on on paid plans and not available on Free. enrich_company uses 1 enrichment record per company returned with data; a not_found result uses no records but counts as one request. The skill calls get_usage (free) before starting, reads the usage object on every response, splits runs that would cross the five-hour or weekly enrichment limit, and retries 429 window_full only after Retry-After with the same Idempotency-Key (REST API) so nothing is counted twice.
 
 ## What it doesn't do
 

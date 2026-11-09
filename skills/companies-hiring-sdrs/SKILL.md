@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, search_companies, scrape_jobs, search_people]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=companies-hiring-sdrs
 ---
 
 # Companies hiring SDRs
@@ -20,8 +20,20 @@ Produces a list of companies that are hiring SDRs or BDRs right now, with the co
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=companies-hiring-sdrs)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=companies-hiring-sdrs)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -48,7 +60,7 @@ Produces a list of companies that are hiring SDRs or BDRs right now, with the co
 3. **Probe the filters** · `search_companies`
    Call search_companies with the translated filters (industry, headcount band, location, technology, and the hiring filter for SDR roles where available) and limit 1. Check the one result against the ICP by its match_reasons. If it is empty or off target, adjust filters before spending records. An empty probe uses no records.
 4. **Pull candidate accounts** · `search_companies`
-   Run the full search with limit up to 100 per page and page with next_cursor until you reach the planned company count. Dedupe by domain. Respect the plan's concurrent search cap; on 429 too_many_concurrent or window_full, wait for Retry-After and retry with the same Idempotency-Key.
+   Run the full search with limit up to 100 per page and page with next_cursor until you reach the planned company count. Dedupe by domain. Respect the plan's concurrent search cap; on 429 too_many_concurrent or window_full, wait for Retry-After and retry with the same Idempotency-Key (REST API).
 5. **Confirm SDR and BDR openings** · `scrape_jobs`
    Call scrape_jobs for each candidate domain's careers page. Keep a company only if an open role matches the role titles and its posted date falls inside the recency window. Record each matching title and date. Drop companies with no matching role or no readable careers page, and count them separately so the summary reports them.
 6. **Find the sales leaders** · `search_people`
@@ -83,7 +95,7 @@ Illustrative output.
 
 ## Cost and limits
 
-search_companies and search_people use 1 search record per record returned; an empty result uses no records but still counts as 1 request. scrape_jobs uses 1 scrape unit per page and draws on no search or enrichment records; scraping is not on the Free plan and needs a unit pack on a paid plan ($9 for 1k, $19 for 5k, $49 for 20k). get_usage is free. The skill calls get_usage first, probes with limit 1, caps the company count to fit the search window (Solo has 500 search records per five hours and 2,500 per week, 3 concurrent searches), limits leaders to 3 per company, and on 429 waits for Retry-After and retries with the same Idempotency-Key so nothing is counted twice. Large runs are split across windows rather than pushed through.
+search_companies and search_people use 1 search record per record returned; an empty result uses no records but still counts as 1 request. scrape_jobs uses 1 scrape unit per page and draws on no search or enrichment records; scraping is not on the Free plan and needs a unit pack on a paid plan ($9 for 1k, $19 for 5k, $49 for 20k). get_usage is free. The skill calls get_usage first, probes with limit 1, caps the company count to fit the search window (Solo has 500 search records per five hours and 2,500 per week, 3 concurrent searches), limits leaders to 3 per company, and on 429 waits for Retry-After and retries with the same Idempotency-Key (REST API) so nothing is counted twice. Large runs are split across windows rather than pushed through.
 
 ## What it doesn't do
 

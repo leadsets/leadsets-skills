@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, search_people, enrich_person]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=new-leader-alerts
 ---
 
 # New leader alerts
@@ -20,8 +20,20 @@ Turns a target account list into a recurring alert of new VP and C-level leaders
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=new-leader-alerts)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=new-leader-alerts)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -47,7 +59,7 @@ Turns a target account list into a recurring alert of new VP and C-level leaders
 3. **Probe the filters on one account** · `search_people`
    Call search_people with company_domain set to one target domain, seniority ["vp","c_level"], any function filter, and limit 1. Check the result's match_reasons reflect seniority and company. If it returns 0 for a domain you expect to have leaders, check the domain spelling and filters before spending on the full run. An empty result uses no records.
 4. **Pull current leaders at every account** · `search_people`
-   Call search_people with company_domain set to a batch of target domains, the same seniority and function filters, and limit 100. Page with next_cursor until it is empty. Keep concurrent calls within the plan (3 Solo, 5 Pro, 8 Team and Max). On 429 window_full wait for Retry-After and retry with the same Idempotency-Key; on 429 weekly_limit stop, save progress and report the resets_at time. Record person_id, full_name, title, company domain and match_reasons for each result.
+   Call search_people with company_domain set to a batch of target domains, the same seniority and function filters, and limit 100. Page with next_cursor until it is empty. Keep concurrent calls within the plan (3 Solo, 5 Pro, 8 Team and Max). On 429 window_full wait for Retry-After and retry with the same Idempotency-Key (REST API); on 429 weekly_limit stop, save progress and report the resets_at time. Record person_id, full_name, title, company domain and match_reasons for each result.
 5. **Diff against the snapshot**
    Match on person_id, then on name plus domain as a fallback. Flag as candidate new leaders: people not in the snapshot, and people already in the snapshot whose title moved up to VP or C-level. Note people in the snapshot who no longer appear as possible departures, but do not alert on them. Dedupe people returned under more than one domain.
 6. **Confirm each new leader and get a contact** · `enrich_person`

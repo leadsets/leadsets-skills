@@ -6,10 +6,10 @@ metadata:
   title: "Best work email for a person"
   category: "Enrichment"
   outcome: "Get verified contact data"
-  tools: [get_usage, enrich_person, verify_email]
+  tools: [search_companies, get_usage, enrich_person, verify_email]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=best-work-email
 ---
 
 # Best work email for a person
@@ -20,8 +20,20 @@ Give it one person and it returns the best work email it can stand behind, with 
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=best-work-email)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=best-work-email)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -83,6 +95,10 @@ Illustrative output.
 ## Cost and limits
 
 get_usage costs nothing. enrich_person uses 1 enrichment record when data comes back and 0 records on a 404, though every call counts as 1 request. The email it returns is already verified with no second charge. Each standalone verify_email call uses 1 per email and counts toward the enrichment limit. A typical run uses 1 to 3 enrichment records, so it fits easily on the free plan's 1,000 one-time records and on any paid plan's five-hour window. The skill checks get_usage first, sends Idempotency-Keys so retries never double count, waits out a 429 using Retry-After, and stops on 402 free_records_exhausted. No scrape units are used. For more than a handful of people, use the Bulk enrich a CSV skill instead.
+
+## Edge cases
+
+- **Only a company name, no domain:** call `search_companies` with `limit: 1`, confirm the result is the right company (name and location), and use its domain. If it's ambiguous, ask the user for the domain instead of guessing.
 
 ## What it doesn't do
 

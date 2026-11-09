@@ -1,6 +1,6 @@
 # Submit a skill
 
-Thanks for adding to the library. Every skill here is a plain `SKILL.md` that teaches an agent one GTM job, end to end, with Leadsets data. New skills arrive as pull requests and are reviewed before they're listed on [leadsets.ai/skills](https://www.leadsets.ai/skills).
+Thanks for adding to the library. Every skill here is a plain `SKILL.md` that teaches an agent one GTM job, end to end, with Leadsets data. New skills arrive as pull requests and are reviewed before they're listed on [leadsets.ai/skills](https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=contributing).
 
 Not ready to write one? [Open a skill idea](https://github.com/leadsets/leadsets-skills/issues/new?template=skill-idea.yml) instead.
 
@@ -31,7 +31,7 @@ Not ready to write one? [Open a skill idea](https://github.com/leadsets/leadsets
    | Section | What goes in it |
    | --- | --- |
    | Frontmatter | `name` (same as the folder), `description` (what it does and when to use it, 200 to 450 characters, ends with "Use when …"), `license: MIT`, and `metadata` (title, category, outcome, tools, version, author) |
-   | Requirements | Leave as in the template |
+   | Requirements, Rules for every run | Leave as in the template |
    | When to use | 3 to 5 request phrasings that should trigger it |
    | What you give it | Each input, with its default |
    | Steps | Numbered; each step names the Leadsets tool it calls. Start with `get_usage` when the run spends records, and probe with a 1-record search before large ones |
@@ -70,14 +70,14 @@ Not ready to write one? [Open a skill idea](https://github.com/leadsets/leadsets
 
 ## Rules
 
-- **Only real Leadsets tools.** No invented tools or parameters. The tools and what they return are in the [MCP docs](https://www.leadsets.ai/docs/mcp).
+- **Only real Leadsets tools.** No invented tools or parameters. The tools and what they return are in the [MCP docs](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=contributing).
 - **No real personal data.** Examples use fictional people and companies, such as Maya Chen at Northwind Analytics (northwind.co).
-- **Respect the data.** Skills must honour opt-outs, never scrape behind logins, and keep outreach lawful (see the [fair use policy](https://www.leadsets.ai/fair-use)).
+- **Respect the data.** Skills must honour opt-outs, never scrape behind logins, and keep outreach lawful (see the [fair use policy](https://www.leadsets.ai/fair-use?utm_source=github&utm_medium=leadsets-skills&utm_campaign=contributing)).
 - **Plain writing.** Short sentences, imperative steps, no hype.
 - **MIT licensed.** By opening a pull request you agree to publish your skill under the MIT license.
 
 ## What happens next
 
-A maintainer reviews within a few business days. We may suggest edits for clarity or to keep skills consistent. Once merged, your skill appears in the index, gets a download zip, and is listed on [leadsets.ai/skills](https://www.leadsets.ai/skills) with credit to you as author.
+A maintainer reviews within a few business days. We may suggest edits for clarity or to keep skills consistent. Once merged, your skill appears in the index, gets a download zip, and is listed on [leadsets.ai/skills](https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=contributing) with credit to you as author.
 
 Questions: open an issue, or email support@leadsets.ai.

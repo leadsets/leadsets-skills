@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, enrich_company, search_companies]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=lookalike-accounts
 ---
 
 # Lookalike accounts
@@ -20,8 +20,20 @@ Turns the domains of your best customers into a ranked list of new accounts with
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=lookalike-accounts)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=lookalike-accounts)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -50,7 +62,7 @@ Turns the domains of your best customers into a ranked list of new accounts with
 4. **Probe the filters** · `search_companies`
    Call search_companies with the derived industry, headcount band, technology and location filters and limit 1. Check the result matches the profile and read its match reasons. If it returns nothing, relax the narrowest filter (usually technology) and probe again. Empty probes use no records.
 5. **Pull the accounts** · `search_companies`
-   Run the full search, paging with the cursor until you reach the target size plus headroom. Respect plan concurrency (3 searches on Solo, 5 on Pro, 8 on Team and Max). On 429 window_full wait for Retry-After and retry with the same Idempotency-Key; on 429 weekly_limit stop and report where to resume.
+   Run the full search, paging with the cursor until you reach the target size plus headroom. Respect plan concurrency (3 searches on Solo, 5 on Pro, 8 on Team and Max). On 429 window_full wait for Retry-After and retry with the same Idempotency-Key (REST API); on 429 weekly_limit stop and report where to resume.
 6. **Exclude, dedupe and rank**
    Remove seed domains, user exclusions and duplicate domains. Score each account by how many profile traits it matches, using the returned match reasons, and note which seeds it most resembles. Trim to the target size, highest score first.
 7. **Deliver the list**

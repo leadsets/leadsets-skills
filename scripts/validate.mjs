@@ -6,7 +6,7 @@ import path from 'node:path'
 const TOOLS = new Set(['search_people', 'search_companies', 'enrich_person', 'enrich_company', 'verify_email', 'scrape_company', 'scrape_jobs', 'get_usage'])
 const CATEGORIES = new Set(['Prospecting', 'Enrichment', 'Email verification', 'Company research', 'Hiring signals', 'Web scraping', 'CRM hygiene', 'List building', 'Outreach handoff', 'Usage and ops', 'Agency workflows'])
 const OUTCOMES = new Set(['Find new prospects', 'Get verified contact data', 'Research accounts and timing', 'Keep your CRM clean', 'Launch outreach'])
-const SECTIONS = ['## Requirements', '## When to use', '## What you give it', '## Steps', '## Checks before returning', '## Output', '## Example', '## Cost and limits']
+const SECTIONS = ['## Requirements', '## Rules for every run', '## When to use', '## What you give it', '## Steps', '## Checks before returning', '## Output', '## Example', '## Cost and limits']
 
 const root = path.join(process.cwd(), 'skills')
 const problems = []

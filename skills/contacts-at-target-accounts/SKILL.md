@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, search_people, enrich_person]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=contacts-at-target-accounts
 ---
 
 # Contacts at target accounts
@@ -20,8 +20,20 @@ Takes an account list you already have and returns the best few people to contac
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=contacts-at-target-accounts)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=contacts-at-target-accounts)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -84,6 +96,11 @@ Illustrative output.
 ## Cost and limits
 
 search_people uses 1 search record per person returned and 1 request per call; an empty search uses no records but still counts as a request. enrich_person uses 1 enrichment record per record returned, and its emails are already verified at no extra cost. No scrape units are used. get_usage is free. On Solo, 500 search records per five hours covers roughly 100 accounts at 3 contacts plus ranking headroom, so larger lists are split across windows; Free accounts share 1,000 one-time records across search and enrichment, and a 402 free_records_exhausted means stop and ask the user to upgrade. Concurrency stays within the plan's limit (3 Solo, 5 Pro, 8 Team and Max), and blocked 429 calls count against nothing.
+
+## Edge cases
+
+- **The same person appears under several accounts:** keep them once, under the account that matches their current company from `enrich_person`, and drop the other rows. Count it in the summary as a duplicate removed.
+- **Report records exactly:** add up `usage.records_counted` from each response rather than estimating.
 
 ## What it doesn't do
 

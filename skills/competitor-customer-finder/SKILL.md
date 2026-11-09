@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, scrape_company, search_people]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=competitor-customer-finder
 ---
 
 # Competitor customer finder
@@ -20,8 +20,20 @@ Turns a competitor's public customer logos and case studies into a list of named
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=competitor-customer-finder)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=competitor-customer-finder)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -84,6 +96,11 @@ Illustrative output.
 ## Cost and limits
 
 scrape_company uses 1 scrape unit per page read, with capped page depth per domain; scraping is an add-on on paid plans (packs of 1k, 5k or 20k units) and is not available on Free. search_people uses 1 search record per person returned and 1 request per call; an empty search uses 0 records. get_usage costs nothing and runs first. The skill caps contacts per customer to keep search records predictable, probes with limit 1 before batching, respects the plan's concurrent search limit, and on a 429 waits for Retry-After instead of retrying blindly; blocked calls count against nothing.
+
+## Edge cases
+
+- **Customer named, but no link on the page:** don't look the domain up or guess it. Put the customer in the Unresolved list with the page it came from, and ask the user for domains only if they want those accounts included.
+- **Evidence:** a customer counts only with a source URL to the page that names it (logo wall, case study or customer page). A bare homepage URL is enough only when the homepage itself shows the logo or quote.
 
 ## What it doesn't do
 

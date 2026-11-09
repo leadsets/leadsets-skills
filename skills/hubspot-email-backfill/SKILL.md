@@ -9,7 +9,7 @@ metadata:
   tools: [get_usage, enrich_person, verify_email]
   version: "1.0"
   author: Leadsets
-  homepage: https://www.leadsets.ai/skills
+  homepage: https://www.leadsets.ai/skills?utm_source=github&utm_medium=leadsets-skills&utm_campaign=hubspot-email-backfill
 ---
 
 # HubSpot email backfill
@@ -20,8 +20,20 @@ Fills blank and bounced email fields on HubSpot contacts with verified work emai
 
 ## Requirements
 
-- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup)).
+- The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=hubspot-email-backfill)), or a Leadsets API key for the REST API.
+- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=hubspot-email-backfill)).
+
+## Rules for every run
+
+These apply on top of the steps below.
+
+- **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
+- **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
+- **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
+- **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
+- **No matches, no records.** Empty results and `404 not_found` cost no records. Mark them clearly and move on; don't guess.
+- **Use the defaults.** When the user doesn't say, use the defaults in "What you give it" instead of asking. Ask only when an input is genuinely missing or ambiguous, and only one question at a time.
 
 ## When to use
 
@@ -47,7 +59,7 @@ Fills blank and bounced email fields on HubSpot contacts with verified work emai
 3. **Probe with one contact** · `enrich_person`
    Call enrich_person on a single contact with the best identifiers the record has (LinkedIn URL if present, otherwise name plus company domain). Confirm the response shape: current role, company, work email with status, confidence and checked_at. If the person has clearly changed company, note it; the skill writes the email only when the returned company matches the HubSpot company or the user approves updating it.
 4. **Enrich the rest in batches** · `enrich_person`
-   Call enrich_person for each remaining contact, sending an Idempotency-Key per contact so retries never double-count. Read the usage object on each response and pause before the window runs out. On 404 not_found, mark the contact 'no match' and move on. On 429 window_full, wait for Retry-After and retry with the same key. On 402 free_records_exhausted, stop and tell the user to upgrade. Emails from enrich_person are already verified; do not re-verify them.
+   Call enrich_person for each remaining contact, with an Idempotency-Key per contact over the REST API so retries never double-count. Read the usage object on each response and pause before the window runs out. On 404 not_found, mark the contact 'no match' and move on. On 429 window_full, wait for Retry-After and retry with the same key. On 402 free_records_exhausted, stop and tell the user to upgrade. Emails from enrich_person are already verified; do not re-verify them.
 5. **Re-check reused bounced addresses** · `verify_email`
    If enrich_person returns the same address that previously bounced, call verify_email on it to get a current label instead of trusting either the old bounce or the match. Only do this for those cases, since standalone verification counts toward enrichment. Keep the status and confidence for the log.
 6. **Sort results by label**
