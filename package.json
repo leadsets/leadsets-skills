@@ -1,0 +1,11 @@
+{
+  "name": "leadsets-skills",
+  "private": true,
+  "description": "Free, open-source GTM skills for AI agents, built on Leadsets B2B data.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "build": "node scripts/build.mjs"
+  }
+}

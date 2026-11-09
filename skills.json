@@ -1,0 +1,734 @@
+[
+  {
+    "id": "account-research-brief",
+    "name": "Account research brief",
+    "category": "Company research",
+    "outcome": "Research accounts and timing",
+    "tools": [
+      "get_usage",
+      "scrape_company",
+      "enrich_company"
+    ],
+    "summary": "Reads a company's site and returns a one-page brief: what they sell, to whom, and angles to open with.",
+    "path": "skills/account-research-brief",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/account-research-brief",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/account-research-brief.zip"
+  },
+  {
+    "id": "account-tiering",
+    "name": "Account tiering",
+    "category": "Company research",
+    "outcome": "Research accounts and timing",
+    "tools": [
+      "get_usage",
+      "enrich_company",
+      "scrape_company"
+    ],
+    "summary": "Scores an account list against your ICP and sorts it into tiers with reasons.",
+    "path": "skills/account-tiering",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/account-tiering",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/account-tiering.zip"
+  },
+  {
+    "id": "attio-record-enrich",
+    "name": "Attio record enrichment",
+    "category": "CRM hygiene",
+    "outcome": "Keep your CRM clean",
+    "tools": [
+      "get_usage",
+      "enrich_company",
+      "enrich_person"
+    ],
+    "summary": "Fills people and company records in Attio with sourced, dated fields.",
+    "path": "skills/attio-record-enrich",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/attio-record-enrich",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/attio-record-enrich.zip"
+  },
+  {
+    "id": "batch-job-runner",
+    "name": "Batch job runner",
+    "category": "Usage and ops",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "enrich_person"
+    ],
+    "summary": "Runs large jobs asynchronously, resumes after limits refill and reports progress.",
+    "path": "skills/batch-job-runner",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/batch-job-runner",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/batch-job-runner.zip"
+  },
+  {
+    "id": "best-work-email",
+    "name": "Best work email for a person",
+    "category": "Enrichment",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "enrich_person",
+      "verify_email"
+    ],
+    "summary": "Returns the best verified work email for one person, or says honestly that there isn't one.",
+    "path": "skills/best-work-email",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/best-work-email",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/best-work-email.zip"
+  },
+  {
+    "id": "bounce-recovery",
+    "name": "Bounce recovery",
+    "category": "Email verification",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "verify_email",
+      "enrich_person"
+    ],
+    "summary": "Takes your bounced contacts and finds a current, verified email for the ones who moved.",
+    "path": "skills/bounce-recovery",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/bounce-recovery",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/bounce-recovery.zip"
+  },
+  {
+    "id": "bulk-enrich-csv",
+    "name": "Bulk enrich a CSV",
+    "category": "Enrichment",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "enrich_person"
+    ],
+    "summary": "Enriches a whole file as an async job, checking your limits before each batch.",
+    "path": "skills/bulk-enrich-csv",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/bulk-enrich-csv",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/bulk-enrich-csv.zip"
+  },
+  {
+    "id": "buying-committee-mapper",
+    "name": "Buying committee mapper",
+    "category": "Prospecting",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "search_people",
+      "enrich_person"
+    ],
+    "summary": "Finds the missing stakeholders on an open deal and adds them to the account.",
+    "path": "skills/buying-committee-mapper",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/buying-committee-mapper",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/buying-committee-mapper.zip"
+  },
+  {
+    "id": "careers-to-jobs",
+    "name": "Careers page to structured jobs",
+    "category": "Web scraping",
+    "outcome": "Research accounts and timing",
+    "tools": [
+      "get_usage",
+      "scrape_jobs"
+    ],
+    "summary": "Turns a careers page into title, team, location and date for every open role.",
+    "path": "skills/careers-to-jobs",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/careers-to-jobs",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/careers-to-jobs.zip"
+  },
+  {
+    "id": "catch-all-segmenter",
+    "name": "Catch-all segmenter",
+    "category": "Email verification",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "verify_email"
+    ],
+    "summary": "Separates catch-all domains so you can warm them at lower volume instead of dropping them.",
+    "path": "skills/catch-all-segmenter",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/catch-all-segmenter",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/catch-all-segmenter.zip"
+  },
+  {
+    "id": "champion-tracker",
+    "name": "Champion job-change tracker",
+    "category": "Prospecting",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "enrich_person"
+    ],
+    "summary": "Spots past champions who moved to a new company, so you reach them in their first 90 days.",
+    "path": "skills/champion-tracker",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/champion-tracker",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/champion-tracker.zip"
+  },
+  {
+    "id": "clay-http-enrich",
+    "name": "Clay table enrichment",
+    "category": "Outreach handoff",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "enrich_person"
+    ],
+    "summary": "Calls Leadsets from a Clay HTTP column to fill emails and roles across a table.",
+    "path": "skills/clay-http-enrich",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/clay-http-enrich",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/clay-http-enrich.zip"
+  },
+  {
+    "id": "companies-hiring-sdrs",
+    "name": "Companies hiring SDRs",
+    "category": "Hiring signals",
+    "outcome": "Research accounts and timing",
+    "tools": [
+      "get_usage",
+      "search_companies",
+      "scrape_jobs",
+      "search_people"
+    ],
+    "summary": "Lists companies that posted SDR or BDR roles recently, with their sales leaders.",
+    "path": "skills/companies-hiring-sdrs",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/companies-hiring-sdrs",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/companies-hiring-sdrs.zip"
+  },
+  {
+    "id": "competitor-customer-finder",
+    "name": "Competitor customer finder",
+    "category": "Company research",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "scrape_company",
+      "search_people"
+    ],
+    "summary": "Pulls the customer logos and case studies a competitor publishes, then finds contacts there.",
+    "path": "skills/competitor-customer-finder",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/competitor-customer-finder",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/competitor-customer-finder.zip"
+  },
+  {
+    "id": "contacts-at-target-accounts",
+    "name": "Contacts at target accounts",
+    "category": "Prospecting",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "search_people",
+      "enrich_person"
+    ],
+    "summary": "Turns an account list into ranked contacts per account, with optional enrichment.",
+    "path": "skills/contacts-at-target-accounts",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/contacts-at-target-accounts",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/contacts-at-target-accounts.zip"
+  },
+  {
+    "id": "data-quality-check",
+    "name": "Data quality check",
+    "category": "List building",
+    "outcome": "Keep your CRM clean",
+    "tools": [
+      "get_usage",
+      "enrich_person",
+      "verify_email"
+    ],
+    "summary": "Audits any list for duplicates, stale titles and risky emails, with a fix list.",
+    "path": "skills/data-quality-check",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/data-quality-check",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/data-quality-check.zip"
+  },
+  {
+    "id": "decision-makers-at-company",
+    "name": "Find decision-makers at a company",
+    "category": "Prospecting",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "enrich_company",
+      "search_people"
+    ],
+    "summary": "Turns one domain into a ranked list of the people who buy what you sell.",
+    "path": "skills/decision-makers-at-company",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/decision-makers-at-company",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/decision-makers-at-company.zip"
+  },
+  {
+    "id": "dedupe-merge",
+    "name": "Dedupe and merge lists",
+    "category": "List building",
+    "outcome": "Keep your CRM clean",
+    "tools": [
+      "get_usage",
+      "enrich_person"
+    ],
+    "summary": "Merges several lists into one, resolving duplicates by person and company.",
+    "path": "skills/dedupe-merge",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/dedupe-merge",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/dedupe-merge.zip"
+  },
+  {
+    "id": "enrich-by-name",
+    "name": "Find and enrich by name",
+    "category": "Enrichment",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "search_people",
+      "enrich_person"
+    ],
+    "summary": "Goes from name plus company to contact data, no LinkedIn URL needed.",
+    "path": "skills/enrich-by-name",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/enrich-by-name",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/enrich-by-name.zip"
+  },
+  {
+    "id": "enrich-company-domains",
+    "name": "Enrich companies from domains",
+    "category": "Enrichment",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "enrich_company"
+    ],
+    "summary": "Adds industry, headcount band, location and stack to a list of domains.",
+    "path": "skills/enrich-company-domains",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/enrich-company-domains",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/enrich-company-domains.zip"
+  },
+  {
+    "id": "enrich-from-linkedin",
+    "name": "Enrich a contact from a LinkedIn URL",
+    "category": "Enrichment",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "enrich_person"
+    ],
+    "summary": "Returns current role, company and a verified work email for one profile URL or a batch.",
+    "path": "skills/enrich-from-linkedin",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/enrich-from-linkedin",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/enrich-from-linkedin.zip"
+  },
+  {
+    "id": "first-line-writer",
+    "name": "Personalized first lines",
+    "category": "Company research",
+    "outcome": "Launch outreach",
+    "tools": [
+      "get_usage",
+      "scrape_company",
+      "scrape_jobs"
+    ],
+    "summary": "Writes one specific, true opening line per prospect from their company's site and hiring.",
+    "path": "skills/first-line-writer",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/first-line-writer",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/first-line-writer.zip"
+  },
+  {
+    "id": "hiring-signal-finder",
+    "name": "Hiring signal finder",
+    "category": "Hiring signals",
+    "outcome": "Research accounts and timing",
+    "tools": [
+      "get_usage",
+      "scrape_jobs",
+      "search_people"
+    ],
+    "summary": "Finds companies hiring for roles that predict they need what you sell, and who to contact.",
+    "path": "skills/hiring-signal-finder",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hiring-signal-finder",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hiring-signal-finder.zip"
+  },
+  {
+    "id": "hiring-to-pain",
+    "name": "Hiring-to-pain mapper",
+    "category": "Hiring signals",
+    "outcome": "Launch outreach",
+    "tools": [
+      "get_usage",
+      "scrape_jobs"
+    ],
+    "summary": "Reads job descriptions and turns them into the likely pain and a matching message angle.",
+    "path": "skills/hiring-to-pain",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hiring-to-pain",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hiring-to-pain.zip"
+  },
+  {
+    "id": "homepage-to-profile",
+    "name": "Homepage to company profile",
+    "category": "Web scraping",
+    "outcome": "Research accounts and timing",
+    "tools": [
+      "get_usage",
+      "scrape_company"
+    ],
+    "summary": "Turns a homepage into products, audience, proof points and key links.",
+    "path": "skills/homepage-to-profile",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/homepage-to-profile",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/homepage-to-profile.zip"
+  },
+  {
+    "id": "hubspot-company-enrich",
+    "name": "HubSpot company enrichment",
+    "category": "CRM hygiene",
+    "outcome": "Keep your CRM clean",
+    "tools": [
+      "get_usage",
+      "enrich_company"
+    ],
+    "summary": "Fills empty industry, size and location fields on HubSpot companies.",
+    "path": "skills/hubspot-company-enrich",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hubspot-company-enrich",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hubspot-company-enrich.zip"
+  },
+  {
+    "id": "hubspot-email-backfill",
+    "name": "HubSpot email backfill",
+    "category": "CRM hygiene",
+    "outcome": "Keep your CRM clean",
+    "tools": [
+      "get_usage",
+      "enrich_person",
+      "verify_email"
+    ],
+    "summary": "Finds contacts with missing or bounced emails and writes verified addresses back.",
+    "path": "skills/hubspot-email-backfill",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hubspot-email-backfill",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hubspot-email-backfill.zip"
+  },
+  {
+    "id": "icp-builder",
+    "name": "ICP builder",
+    "category": "List building",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "search_companies"
+    ],
+    "summary": "Interviews you for five minutes, then saves your ICP as reusable Leadsets filters.",
+    "path": "skills/icp-builder",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/icp-builder",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/icp-builder.zip"
+  },
+  {
+    "id": "icp-fit-scoring",
+    "name": "ICP fit scoring",
+    "category": "List building",
+    "outcome": "Research accounts and timing",
+    "tools": [
+      "get_usage",
+      "enrich_company",
+      "enrich_person"
+    ],
+    "summary": "Scores any account or contact list against your ICP and explains each score.",
+    "path": "skills/icp-fit-scoring",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/icp-fit-scoring",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/icp-fit-scoring.zip"
+  },
+  {
+    "id": "job-change-detector",
+    "name": "Job-change detector",
+    "category": "Enrichment",
+    "outcome": "Keep your CRM clean",
+    "tools": [
+      "get_usage",
+      "enrich_person"
+    ],
+    "summary": "Re-checks a contact list and flags everyone who changed role or company.",
+    "path": "skills/job-change-detector",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/job-change-detector",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/job-change-detector.zip"
+  },
+  {
+    "id": "list-cleaner",
+    "name": "Clean a list before sending",
+    "category": "Email verification",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "verify_email"
+    ],
+    "summary": "Verifies every address and returns send-safe, catch-all, unknown and invalid segments.",
+    "path": "skills/list-cleaner",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/list-cleaner",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/list-cleaner.zip"
+  },
+  {
+    "id": "lookalike-accounts",
+    "name": "Lookalike accounts",
+    "category": "Prospecting",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "enrich_company",
+      "search_companies"
+    ],
+    "summary": "Starts from your best customers and finds companies that look like them.",
+    "path": "skills/lookalike-accounts",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/lookalike-accounts",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/lookalike-accounts.zip"
+  },
+  {
+    "id": "multi-client-icp-runner",
+    "name": "Multi-client ICP runner",
+    "category": "Agency workflows",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "search_people",
+      "enrich_person",
+      "verify_email"
+    ],
+    "summary": "Runs a saved ICP for each agency client and delivers one clean list per client.",
+    "path": "skills/multi-client-icp-runner",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/multi-client-icp-runner",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/multi-client-icp-runner.zip"
+  },
+  {
+    "id": "n8n-inbound-enrich",
+    "name": "n8n inbound lead enrichment",
+    "category": "Outreach handoff",
+    "outcome": "Launch outreach",
+    "tools": [
+      "get_usage",
+      "enrich_person",
+      "enrich_company"
+    ],
+    "summary": "Enriches every new form fill in n8n and routes good-fit leads to sales.",
+    "path": "skills/n8n-inbound-enrich",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/n8n-inbound-enrich",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/n8n-inbound-enrich.zip"
+  },
+  {
+    "id": "names-to-prospects",
+    "name": "Names to prospects",
+    "category": "Prospecting",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "search_people",
+      "enrich_person"
+    ],
+    "summary": "Turns a list of names and companies (event attendees, webinar sign-ups) into enriched contacts.",
+    "path": "skills/names-to-prospects",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/names-to-prospects",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/names-to-prospects.zip"
+  },
+  {
+    "id": "new-leader-alerts",
+    "name": "New leader alerts",
+    "category": "Hiring signals",
+    "outcome": "Research accounts and timing",
+    "tools": [
+      "get_usage",
+      "search_people",
+      "enrich_person"
+    ],
+    "summary": "Watches target accounts for new VP and C-level hires, the classic buying trigger.",
+    "path": "skills/new-leader-alerts",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/new-leader-alerts",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/new-leader-alerts.zip"
+  },
+  {
+    "id": "outbound-prospect-list",
+    "name": "Build an outbound prospect list",
+    "category": "Prospecting",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "search_companies",
+      "search_people",
+      "enrich_person",
+      "verify_email"
+    ],
+    "summary": "Defines your ICP, finds matching people, enriches and verifies them, and exports a send-ready list.",
+    "path": "skills/outbound-prospect-list",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/outbound-prospect-list",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/outbound-prospect-list.zip"
+  },
+  {
+    "id": "partner-directory-accounts",
+    "name": "Partner directory to account list",
+    "category": "Web scraping",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "scrape_company",
+      "enrich_company"
+    ],
+    "summary": "Turns a public partner or integrations directory into an enriched account list.",
+    "path": "skills/partner-directory-accounts",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/partner-directory-accounts",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/partner-directory-accounts.zip"
+  },
+  {
+    "id": "pipedrive-lead-enrich",
+    "name": "Pipedrive lead enrichment",
+    "category": "CRM hygiene",
+    "outcome": "Keep your CRM clean",
+    "tools": [
+      "get_usage",
+      "enrich_person",
+      "enrich_company"
+    ],
+    "summary": "Enriches new Pipedrive leads with role, company and a verified email.",
+    "path": "skills/pipedrive-lead-enrich",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/pipedrive-lead-enrich",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/pipedrive-lead-enrich.zip"
+  },
+  {
+    "id": "positioning-snapshot",
+    "name": "Positioning snapshot",
+    "category": "Company research",
+    "outcome": "Research accounts and timing",
+    "tools": [
+      "get_usage",
+      "scrape_company"
+    ],
+    "summary": "Summarizes a company's products, pricing model and ideal customer from its own pages.",
+    "path": "skills/positioning-snapshot",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/positioning-snapshot",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/positioning-snapshot.zip"
+  },
+  {
+    "id": "pre-send-check",
+    "name": "Pre-send campaign check",
+    "category": "Email verification",
+    "outcome": "Launch outreach",
+    "tools": [
+      "get_usage",
+      "verify_email"
+    ],
+    "summary": "Runs a final verification on a loaded campaign and pauses risky contacts before launch.",
+    "path": "skills/pre-send-check",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/pre-send-check",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/pre-send-check.zip"
+  },
+  {
+    "id": "push-to-linkedcamp",
+    "name": "Push a list to LinkedCamp",
+    "category": "Outreach handoff",
+    "outcome": "Launch outreach",
+    "tools": [
+      "get_usage",
+      "search_people",
+      "enrich_person"
+    ],
+    "summary": "Sends a verified prospect list straight into a LinkedCamp campaign as leads.",
+    "path": "skills/push-to-linkedcamp",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/push-to-linkedcamp",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/push-to-linkedcamp.zip"
+  },
+  {
+    "id": "push-to-sequencer",
+    "name": "Push to Instantly or Smartlead",
+    "category": "Outreach handoff",
+    "outcome": "Launch outreach",
+    "tools": [
+      "get_usage",
+      "verify_email"
+    ],
+    "summary": "Loads verified, segmented contacts into your email sequencer with custom fields.",
+    "path": "skills/push-to-sequencer",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/push-to-sequencer",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/push-to-sequencer.zip"
+  },
+  {
+    "id": "role-address-filter",
+    "name": "Role-address filter",
+    "category": "Email verification",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "verify_email",
+      "search_people"
+    ],
+    "summary": "Flags info@, sales@ and other shared inboxes, and finds a named person behind each.",
+    "path": "skills/role-address-filter",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/role-address-filter",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/role-address-filter.zip"
+  },
+  {
+    "id": "salesforce-title-refresh",
+    "name": "Salesforce title refresh",
+    "category": "CRM hygiene",
+    "outcome": "Keep your CRM clean",
+    "tools": [
+      "get_usage",
+      "enrich_person"
+    ],
+    "summary": "Refreshes titles and seniority on Salesforce contacts and logs every change.",
+    "path": "skills/salesforce-title-refresh",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/salesforce-title-refresh",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/salesforce-title-refresh.zip"
+  },
+  {
+    "id": "search-b2b-prospects",
+    "name": "Search B2B prospects",
+    "category": "Prospecting",
+    "outcome": "Find new prospects",
+    "tools": [
+      "get_usage",
+      "search_people"
+    ],
+    "summary": "Finds people by title, function, seniority, location, company size and industry, with match reasons.",
+    "path": "skills/search-b2b-prospects",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/search-b2b-prospects",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/search-b2b-prospects.zip"
+  },
+  {
+    "id": "signal-slack-alerts",
+    "name": "Signal alerts to Slack",
+    "category": "Outreach handoff",
+    "outcome": "Research accounts and timing",
+    "tools": [
+      "get_usage",
+      "scrape_jobs",
+      "enrich_person"
+    ],
+    "summary": "Posts new hiring and leadership signals on your target accounts to a Slack channel.",
+    "path": "skills/signal-slack-alerts",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/signal-slack-alerts",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/signal-slack-alerts.zip"
+  },
+  {
+    "id": "stale-record-audit",
+    "name": "Stale record audit",
+    "category": "CRM hygiene",
+    "outcome": "Keep your CRM clean",
+    "tools": [
+      "get_usage",
+      "enrich_person"
+    ],
+    "summary": "Flags contacts whose title or company is out of date before reps waste a sequence on them.",
+    "path": "skills/stale-record-audit",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/stale-record-audit",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/stale-record-audit.zip"
+  },
+  {
+    "id": "team-page-to-contacts",
+    "name": "Team page to contacts",
+    "category": "Web scraping",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage",
+      "scrape_company",
+      "enrich_person",
+      "verify_email"
+    ],
+    "summary": "Reads a public team page, then finds and verifies the people listed on it.",
+    "path": "skills/team-page-to-contacts",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/team-page-to-contacts",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/team-page-to-contacts.zip"
+  },
+  {
+    "id": "usage-planner",
+    "name": "Usage planner",
+    "category": "Usage and ops",
+    "outcome": "Get verified contact data",
+    "tools": [
+      "get_usage"
+    ],
+    "summary": "Checks remaining limits and splits big jobs across windows so runs never stall halfway.",
+    "path": "skills/usage-planner",
+    "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/usage-planner",
+    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/usage-planner.zip"
+  }
+]

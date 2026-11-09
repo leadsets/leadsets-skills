@@ -1,0 +1,23 @@
+name: Skill idea
+description: Suggest a skill you'd like to see in the library
+labels: [skill idea]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Skill name
+      placeholder: e.g. Find podcast guests in my ICP
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What should it do?
+      description: The input you'd give it and the result you want back.
+    validations:
+      required: true
+  - type: textarea
+    id: tools
+    attributes:
+      label: Tools or systems involved
+      description: Leadsets tools, plus any CRM, sheet or sequencer it should hand off to.
