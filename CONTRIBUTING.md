@@ -66,7 +66,7 @@ Not ready to write one? [Open a skill idea](https://github.com/leadsets/leadsets
 
    The same check runs on every pull request.
 
-6. **Open a pull request** against `main`. The template asks what the skill does, how you tested it, and for a short checklist. Don't commit `dist/` or edit the README index; they're rebuilt when a skill is merged.
+6. **Open a pull request** against `main`. The template asks what the skill does, how you tested it, and for a short checklist. Don't edit the README index; it's rebuilt when a skill is merged. `dist/` isn't committed: on every merge to `main` the release workflow rebuilds the zips and uploads them to the [skills release](https://github.com/leadsets/leadsets-skills/releases/tag/skills).
 
 ## Rules
 

@@ -3,6 +3,8 @@
  * Builds the downloads and the index:
  *  - dist/<id>.zip: the skill folder, ready to upload to Claude (Settings → Skills) or drop into an agent's skills directory
  *  - dist/leadsets-skills.zip: every skill
+ *    dist/ is not committed: the release workflow (.github/workflows/release.yml) builds it and uploads the zips to
+ *    the "skills" GitHub release, which is where the download links point (DOWNLOADS).
  *  - skills.json: the catalog the website reads
  *  - README.md: the table of skills between the INDEX markers
  */
@@ -11,6 +13,8 @@ import path from 'node:path'
 import { execFileSync } from 'node:child_process'
 
 const REPO = 'https://github.com/leadsets/leadsets-skills'
+/** Zips live on one rolling release (tag "skills"); its assets are replaced on every merge to main. */
+const DOWNLOADS = `${REPO}/releases/download/skills`
 const root = process.cwd()
 const skillsDir = path.join(root, 'skills')
 const ORDER = ['Prospecting', 'Enrichment', 'Email verification', 'Company research', 'Hiring signals', 'Web scraping', 'CRM hygiene', 'List building', 'Outreach handoff', 'Usage and ops', 'Agency workflows']
@@ -47,13 +51,13 @@ const connectionsOf = (id) => {
   return [...CONNECTIONS.filter((c) => new RegExp(`\\b${c.replace(' ', '\\s')}\\b`).test(md)), 'Claude', 'ChatGPT', 'Cursor']
 }
 const authorOf = (id) => (fs.readFileSync(path.join(skillsDir, id, 'SKILL.md'), 'utf8').match(/^\s+author:\s*"?([^"\n]+)"?$/m)?.[1] ?? 'Leadsets').trim()
-const catalog = skills.map((s) => ({ ...s, connections: connectionsOf(s.id), author: authorOf(s.id) === 'Leadsets' ? 'Leadsets team' : 'Community', path: `skills/${s.id}`, url: `${REPO}/tree/main/skills/${s.id}`, download: `${REPO}/raw/main/dist/${s.id}.zip` }))
+const catalog = skills.map((s) => ({ ...s, connections: connectionsOf(s.id), author: authorOf(s.id) === 'Leadsets' ? 'Leadsets team' : 'Community', path: `skills/${s.id}`, url: `${REPO}/tree/main/skills/${s.id}`, download: `${DOWNLOADS}/${s.id}.zip` }))
 fs.writeFileSync(path.join(root, 'skills.json'), JSON.stringify(catalog, null, 2) + '\n')
 
 const rows = ORDER.filter((c) => skills.some((s) => s.category === c))
-  .map((c) => `### ${c}\n\n| Skill | What it does | Tools | Download |\n| --- | --- | --- | --- |\n${skills.filter((s) => s.category === c).map((s) => `| [${s.name}](skills/${s.id}) | ${s.summary} | ${s.tools.map((t) => `\`${t}\``).join(' ')} | [zip](dist/${s.id}.zip) |`).join('\n')}`)
+  .map((c) => `### ${c}\n\n| Skill | What it does | Tools | Download |\n| --- | --- | --- | --- |\n${skills.filter((s) => s.category === c).map((s) => `| [${s.name}](skills/${s.id}) | ${s.summary} | ${s.tools.map((t) => `\`${t}\``).join(' ')} | [zip](${DOWNLOADS}/${s.id}.zip) |`).join('\n')}`)
   .join('\n\n')
 const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8')
-const next = readme.replace(/<!-- INDEX:START -->[\s\S]*<!-- INDEX:END -->/, `<!-- INDEX:START -->\n${rows}\n<!-- INDEX:END -->`).replace(/\*\*\d+ skills\*\*/, `**${skills.length} skills**`)
+const next = readme.replace(/<!-- INDEX:START -->[\s\S]*<!-- INDEX:END -->/, `<!-- INDEX:START -->\n${rows}\n<!-- INDEX:END -->`).replace(/\*\*\d+ skills\*\*/, `**${skills.length} skills**`).replace(/\*\*Everything at once:\*\* \[[^\]]*\]\([^)]*\)/, `**Everything at once:** [leadsets-skills.zip](${DOWNLOADS}/leadsets-skills.zip)`)
 fs.writeFileSync(path.join(root, 'README.md'), next)
 console.log(`${skills.length} skills · dist/ and README index updated`)

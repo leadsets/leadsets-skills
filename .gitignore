@@ -1,2 +1,4 @@
 .DS_Store
 node_modules/
+# Built by scripts/build.mjs; published as assets of the "skills" release, not committed.
+dist/

@@ -1,0 +1,35 @@
+name: Publish skill downloads
+
+# Builds dist/*.zip and uploads them to the rolling "skills" release, replacing the previous files.
+# The website and README link to https://github.com/leadsets/leadsets-skills/releases/download/skills/<id>.zip.
+on:
+  push:
+    branches: [main]
+    paths: ['skills/**', 'scripts/build.mjs']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-skills
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/validate.mjs
+      - run: node scripts/build.mjs
+      - name: Upload zips to the skills release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view skills >/dev/null 2>&1; then
+            gh release create skills --title "Skill downloads" --notes "Every skill as a zip, rebuilt on each merge to main. Upload one to Claude (Settings → Skills) or unzip it into your agent's skills folder." --latest
+          fi
+          gh release upload skills dist/*.zip --clobber

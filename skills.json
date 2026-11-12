@@ -19,7 +19,7 @@
     "author": "Leadsets team",
     "path": "skills/account-research-brief",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/account-research-brief",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/account-research-brief.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/account-research-brief.zip"
   },
   {
     "id": "account-tiering",
@@ -46,7 +46,7 @@
     "author": "Leadsets team",
     "path": "skills/account-tiering",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/account-tiering",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/account-tiering.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/account-tiering.zip"
   },
   {
     "id": "attio-record-enrich",
@@ -69,7 +69,7 @@
     "author": "Leadsets team",
     "path": "skills/attio-record-enrich",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/attio-record-enrich",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/attio-record-enrich.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/attio-record-enrich.zip"
   },
   {
     "id": "batch-job-runner",
@@ -90,7 +90,7 @@
     "author": "Leadsets team",
     "path": "skills/batch-job-runner",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/batch-job-runner",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/batch-job-runner.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/batch-job-runner.zip"
   },
   {
     "id": "best-work-email",
@@ -113,7 +113,7 @@
     "author": "Leadsets team",
     "path": "skills/best-work-email",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/best-work-email",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/best-work-email.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/best-work-email.zip"
   },
   {
     "id": "bounce-recovery",
@@ -137,7 +137,7 @@
     "author": "Leadsets team",
     "path": "skills/bounce-recovery",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/bounce-recovery",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/bounce-recovery.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/bounce-recovery.zip"
   },
   {
     "id": "bulk-enrich-csv",
@@ -160,7 +160,7 @@
     "author": "Leadsets team",
     "path": "skills/bulk-enrich-csv",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/bulk-enrich-csv",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/bulk-enrich-csv.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/bulk-enrich-csv.zip"
   },
   {
     "id": "buying-committee-mapper",
@@ -186,7 +186,7 @@
     "author": "Leadsets team",
     "path": "skills/buying-committee-mapper",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/buying-committee-mapper",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/buying-committee-mapper.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/buying-committee-mapper.zip"
   },
   {
     "id": "careers-to-jobs",
@@ -208,7 +208,7 @@
     "author": "Leadsets team",
     "path": "skills/careers-to-jobs",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/careers-to-jobs",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/careers-to-jobs.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/careers-to-jobs.zip"
   },
   {
     "id": "catch-all-segmenter",
@@ -233,7 +233,7 @@
     "author": "Leadsets team",
     "path": "skills/catch-all-segmenter",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/catch-all-segmenter",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/catch-all-segmenter.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/catch-all-segmenter.zip"
   },
   {
     "id": "champion-tracker",
@@ -254,7 +254,7 @@
     "author": "Leadsets team",
     "path": "skills/champion-tracker",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/champion-tracker",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/champion-tracker.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/champion-tracker.zip"
   },
   {
     "id": "clay-http-enrich",
@@ -275,7 +275,7 @@
     "author": "Leadsets team",
     "path": "skills/clay-http-enrich",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/clay-http-enrich",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/clay-http-enrich.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/clay-http-enrich.zip"
   },
   {
     "id": "companies-hiring-sdrs",
@@ -299,7 +299,7 @@
     "author": "Leadsets team",
     "path": "skills/companies-hiring-sdrs",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/companies-hiring-sdrs",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/companies-hiring-sdrs.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/companies-hiring-sdrs.zip"
   },
   {
     "id": "competitor-customer-finder",
@@ -322,7 +322,7 @@
     "author": "Leadsets team",
     "path": "skills/competitor-customer-finder",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/competitor-customer-finder",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/competitor-customer-finder.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/competitor-customer-finder.zip"
   },
   {
     "id": "contacts-at-target-accounts",
@@ -346,7 +346,7 @@
     "author": "Leadsets team",
     "path": "skills/contacts-at-target-accounts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/contacts-at-target-accounts",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/contacts-at-target-accounts.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/contacts-at-target-accounts.zip"
   },
   {
     "id": "data-quality-check",
@@ -370,7 +370,7 @@
     "author": "Leadsets team",
     "path": "skills/data-quality-check",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/data-quality-check",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/data-quality-check.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/data-quality-check.zip"
   },
   {
     "id": "decision-makers-at-company",
@@ -393,7 +393,7 @@
     "author": "Leadsets team",
     "path": "skills/decision-makers-at-company",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/decision-makers-at-company",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/decision-makers-at-company.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/decision-makers-at-company.zip"
   },
   {
     "id": "dedupe-merge",
@@ -416,7 +416,7 @@
     "author": "Leadsets team",
     "path": "skills/dedupe-merge",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/dedupe-merge",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/dedupe-merge.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/dedupe-merge.zip"
   },
   {
     "id": "enrich-by-name",
@@ -438,7 +438,7 @@
     "author": "Leadsets team",
     "path": "skills/enrich-by-name",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/enrich-by-name",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/enrich-by-name.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/enrich-by-name.zip"
   },
   {
     "id": "enrich-company-domains",
@@ -461,7 +461,7 @@
     "author": "Leadsets team",
     "path": "skills/enrich-company-domains",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/enrich-company-domains",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/enrich-company-domains.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/enrich-company-domains.zip"
   },
   {
     "id": "enrich-from-linkedin",
@@ -484,7 +484,7 @@
     "author": "Leadsets team",
     "path": "skills/enrich-from-linkedin",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/enrich-from-linkedin",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/enrich-from-linkedin.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/enrich-from-linkedin.zip"
   },
   {
     "id": "first-line-writer",
@@ -510,7 +510,7 @@
     "author": "Leadsets team",
     "path": "skills/first-line-writer",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/first-line-writer",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/first-line-writer.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/first-line-writer.zip"
   },
   {
     "id": "hiring-signal-finder",
@@ -533,7 +533,7 @@
     "author": "Leadsets team",
     "path": "skills/hiring-signal-finder",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hiring-signal-finder",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hiring-signal-finder.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/hiring-signal-finder.zip"
   },
   {
     "id": "hiring-to-pain",
@@ -554,7 +554,7 @@
     "author": "Leadsets team",
     "path": "skills/hiring-to-pain",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hiring-to-pain",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hiring-to-pain.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/hiring-to-pain.zip"
   },
   {
     "id": "homepage-to-profile",
@@ -576,7 +576,7 @@
     "author": "Leadsets team",
     "path": "skills/homepage-to-profile",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/homepage-to-profile",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/homepage-to-profile.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/homepage-to-profile.zip"
   },
   {
     "id": "hubspot-company-enrich",
@@ -598,7 +598,7 @@
     "author": "Leadsets team",
     "path": "skills/hubspot-company-enrich",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hubspot-company-enrich",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hubspot-company-enrich.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/hubspot-company-enrich.zip"
   },
   {
     "id": "hubspot-email-backfill",
@@ -621,7 +621,7 @@
     "author": "Leadsets team",
     "path": "skills/hubspot-email-backfill",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/hubspot-email-backfill",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/hubspot-email-backfill.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/hubspot-email-backfill.zip"
   },
   {
     "id": "icp-builder",
@@ -642,7 +642,7 @@
     "author": "Leadsets team",
     "path": "skills/icp-builder",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/icp-builder",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/icp-builder.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/icp-builder.zip"
   },
   {
     "id": "icp-fit-scoring",
@@ -665,7 +665,7 @@
     "author": "Leadsets team",
     "path": "skills/icp-fit-scoring",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/icp-fit-scoring",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/icp-fit-scoring.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/icp-fit-scoring.zip"
   },
   {
     "id": "job-change-detector",
@@ -687,7 +687,7 @@
     "author": "Leadsets team",
     "path": "skills/job-change-detector",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/job-change-detector",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/job-change-detector.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/job-change-detector.zip"
   },
   {
     "id": "list-cleaner",
@@ -713,7 +713,7 @@
     "author": "Leadsets team",
     "path": "skills/list-cleaner",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/list-cleaner",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/list-cleaner.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/list-cleaner.zip"
   },
   {
     "id": "lookalike-accounts",
@@ -736,7 +736,7 @@
     "author": "Leadsets team",
     "path": "skills/lookalike-accounts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/lookalike-accounts",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/lookalike-accounts.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/lookalike-accounts.zip"
   },
   {
     "id": "multi-client-icp-runner",
@@ -761,7 +761,7 @@
     "author": "Leadsets team",
     "path": "skills/multi-client-icp-runner",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/multi-client-icp-runner",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/multi-client-icp-runner.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/multi-client-icp-runner.zip"
   },
   {
     "id": "n8n-inbound-enrich",
@@ -790,7 +790,7 @@
     "author": "Leadsets team",
     "path": "skills/n8n-inbound-enrich",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/n8n-inbound-enrich",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/n8n-inbound-enrich.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/n8n-inbound-enrich.zip"
   },
   {
     "id": "names-to-prospects",
@@ -813,7 +813,7 @@
     "author": "Leadsets team",
     "path": "skills/names-to-prospects",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/names-to-prospects",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/names-to-prospects.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/names-to-prospects.zip"
   },
   {
     "id": "new-leader-alerts",
@@ -836,7 +836,7 @@
     "author": "Leadsets team",
     "path": "skills/new-leader-alerts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/new-leader-alerts",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/new-leader-alerts.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/new-leader-alerts.zip"
   },
   {
     "id": "outbound-prospect-list",
@@ -862,7 +862,7 @@
     "author": "Leadsets team",
     "path": "skills/outbound-prospect-list",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/outbound-prospect-list",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/outbound-prospect-list.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/outbound-prospect-list.zip"
   },
   {
     "id": "partner-directory-accounts",
@@ -887,7 +887,7 @@
     "author": "Leadsets team",
     "path": "skills/partner-directory-accounts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/partner-directory-accounts",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/partner-directory-accounts.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/partner-directory-accounts.zip"
   },
   {
     "id": "pipedrive-lead-enrich",
@@ -910,7 +910,7 @@
     "author": "Leadsets team",
     "path": "skills/pipedrive-lead-enrich",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/pipedrive-lead-enrich",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/pipedrive-lead-enrich.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/pipedrive-lead-enrich.zip"
   },
   {
     "id": "positioning-snapshot",
@@ -932,7 +932,7 @@
     "author": "Leadsets team",
     "path": "skills/positioning-snapshot",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/positioning-snapshot",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/positioning-snapshot.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/positioning-snapshot.zip"
   },
   {
     "id": "pre-send-check",
@@ -956,7 +956,7 @@
     "author": "Leadsets team",
     "path": "skills/pre-send-check",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/pre-send-check",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/pre-send-check.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/pre-send-check.zip"
   },
   {
     "id": "push-to-linkedcamp",
@@ -979,7 +979,7 @@
     "author": "Leadsets team",
     "path": "skills/push-to-linkedcamp",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/push-to-linkedcamp",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/push-to-linkedcamp.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/push-to-linkedcamp.zip"
   },
   {
     "id": "push-to-sequencer",
@@ -1002,7 +1002,7 @@
     "author": "Leadsets team",
     "path": "skills/push-to-sequencer",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/push-to-sequencer",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/push-to-sequencer.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/push-to-sequencer.zip"
   },
   {
     "id": "role-address-filter",
@@ -1026,7 +1026,7 @@
     "author": "Leadsets team",
     "path": "skills/role-address-filter",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/role-address-filter",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/role-address-filter.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/role-address-filter.zip"
   },
   {
     "id": "salesforce-title-refresh",
@@ -1048,7 +1048,7 @@
     "author": "Leadsets team",
     "path": "skills/salesforce-title-refresh",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/salesforce-title-refresh",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/salesforce-title-refresh.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/salesforce-title-refresh.zip"
   },
   {
     "id": "search-b2b-prospects",
@@ -1069,7 +1069,7 @@
     "author": "Leadsets team",
     "path": "skills/search-b2b-prospects",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/search-b2b-prospects",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/search-b2b-prospects.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/search-b2b-prospects.zip"
   },
   {
     "id": "signal-slack-alerts",
@@ -1092,7 +1092,7 @@
     "author": "Leadsets team",
     "path": "skills/signal-slack-alerts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/signal-slack-alerts",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/signal-slack-alerts.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/signal-slack-alerts.zip"
   },
   {
     "id": "stale-record-audit",
@@ -1121,7 +1121,7 @@
     "author": "Leadsets team",
     "path": "skills/stale-record-audit",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/stale-record-audit",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/stale-record-audit.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/stale-record-audit.zip"
   },
   {
     "id": "team-page-to-contacts",
@@ -1145,7 +1145,7 @@
     "author": "Leadsets team",
     "path": "skills/team-page-to-contacts",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/team-page-to-contacts",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/team-page-to-contacts.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/team-page-to-contacts.zip"
   },
   {
     "id": "usage-planner",
@@ -1165,6 +1165,6 @@
     "author": "Leadsets team",
     "path": "skills/usage-planner",
     "url": "https://github.com/leadsets/leadsets-skills/tree/main/skills/usage-planner",
-    "download": "https://github.com/leadsets/leadsets-skills/raw/main/dist/usage-planner.zip"
+    "download": "https://github.com/leadsets/leadsets-skills/releases/download/skills/usage-planner.zip"
   }
 ]
