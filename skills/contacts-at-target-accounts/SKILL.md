@@ -29,6 +29,7 @@ These apply on top of the steps below.
 
 - **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
 - **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **What people search counts.** In `search_people`, each person is 1 search record and their company another; pass `include_company: false` for people only. Work emails come only with `include_emails: true` (or `has_verified_email: true`) and use 1 enrichment record each.
 - **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
 - **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
 - **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
@@ -60,7 +61,7 @@ These apply on top of the steps below.
 3. **Probe the filters** · `search_people`
    Call search_people with company_domain set to the first domain, the persona filters and limit 1. Check that the result's title and match_reasons fit the persona. If it returns nothing, loosen seniority or titles and probe again before spending on the full list.
 4. **Find people at each account** · `search_people`
-   Call search_people once per domain with company_domain [domain], the confirmed title, function and seniority filters, and limit set to contacts per account + 2 so there is room to rank. Run no more calls at once than the plan's concurrent searches. Send an Idempotency-Key on each call. On 429 window_full or too_many_concurrent, wait for Retry-After and retry; on weekly_limit, stop and report where to resume. Record domains that return no results.
+   Call search_people once per domain with company_domain [domain], the confirmed title, function and seniority filters, and limit set to contacts per account + 2 so there is room to rank. Pass include_company: false, since the company is already known. Run no more calls at once than the plan's concurrent searches. Send an Idempotency-Key on each call. On 429 window_full or too_many_concurrent, wait for Retry-After and retry; on weekly_limit, stop and report where to resume. Record domains that return no results.
 5. **Rank and trim per account**
    Within each account, rank by seniority (c_level, vp, head, director, manager, ic), then closeness of title to the persona, then number of match_reasons. Keep the top N per account. Remove any person_id that appears under more than one account and keep it on the account matching its company domain.
 6. **Enrich kept contacts (optional)** · `enrich_person`
@@ -95,7 +96,7 @@ Illustrative output.
 
 ## Cost and limits
 
-search_people uses 1 search record per person returned and 1 request per call; an empty search uses no records but still counts as a request. enrich_person uses 1 enrichment record per record returned, and its emails are already verified at no extra cost. No scrape units are used. get_usage is free. On Solo, 500 search records per five hours covers roughly 100 accounts at 3 contacts plus ranking headroom, so larger lists are split across windows; Free accounts share 1,000 one-time records across search and enrichment, and a 402 free_records_exhausted means stop and ask the user to upgrade. Concurrency stays within the plan's limit (3 Solo, 5 Pro, 8 Team and Max), and blocked 429 calls count against nothing.
+search_people uses 1 search record per person returned (include_company: false) and 1 request per call; an empty search uses no records but still counts as a request. enrich_person uses 1 enrichment record per record returned, and its emails are already verified at no extra cost. No scrape units are used. get_usage is free. On Solo, 500 search records per five hours covers roughly 100 accounts at 3 contacts plus ranking headroom, so larger lists are split across windows; Free accounts share 1,000 one-time records across search and enrichment, and a 402 free_records_exhausted means stop and ask the user to upgrade. Concurrency stays within the plan's limit (3 Solo, 5 Pro, 8 Team and Max), and blocked 429 calls count against nothing.
 
 ## Edge cases
 
