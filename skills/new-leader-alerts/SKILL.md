@@ -29,6 +29,7 @@ These apply on top of the steps below.
 
 - **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
 - **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **What people search counts.** In `search_people`, each person is 1 search record and their company another; pass `include_company: false` for people only. Work emails come only with `include_emails: true` (or `has_verified_email: true`) and use 1 enrichment record each.
 - **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
 - **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
 - **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
@@ -53,7 +54,7 @@ These apply on top of the steps below.
 ## Steps
 
 1. **Plan the run against remaining limits** · `get_usage`
-   Call get_usage and read search records left in the five-hour window and the week, and enrichment records left. Estimate search cost as accounts x about 5 leaders per account, and enrichment as the expected number of new names (usually under 10 percent of the snapshot). If search would cross the window, split the account list into batches and tell the user how many windows the run needs. On the free plan, warn that a recurring watch draws down the 1,000 one-time records each run.
+   Call get_usage and read search records left in the five-hour window and the week, and enrichment records left. Estimate search cost as accounts x about 5 leaders per account x 2 (person and company), and enrichment as the expected number of new names (usually under 10 percent of the snapshot). If search would cross the window, split the account list into batches and tell the user how many windows the run needs. On the free plan, warn that a recurring watch draws down the 1,000 one-time records each run.
 2. **Load the snapshot and confirm scope**
    Read the previous snapshot if one exists and check it has person_id and company domain on every row. Confirm roles to watch. If no snapshot exists, tell the user this run creates the baseline and will report current leaders, not new ones. Ask one question only if the account list or roles are ambiguous.
 3. **Probe the filters on one account** · `search_people`
@@ -95,7 +96,7 @@ Illustrative output.
 
 ## Cost and limits
 
-search_people uses 1 search record per leader returned, so each run costs roughly the size of the leader snapshot; empty results use no records but still count as requests. enrich_person uses 1 enrichment record per confirmed result and runs only on new candidates, which keeps enrichment small. No verify_email calls are needed because enrich_person emails are already verified, and no scrape units are used. get_usage is free and runs first; large account lists are split across five-hour windows (Solo allows 500 search records per five hours and 2,500 per week). On 429 the skill waits for Retry-After or stops at a weekly limit, using Idempotency-Keys so retries never double-count. The free plan's 1,000 one-time records are shared across search and enrichment and do not refill, so a recurring watch needs a paid plan.
+search_people uses 2 search records per leader returned (the person and their company, which maps leaders back to accounts), so each run costs roughly twice the size of the leader snapshot; empty results use no records but still count as requests. enrich_person uses 1 enrichment record per confirmed result and runs only on new candidates, which keeps enrichment small. No verify_email calls are needed because enrich_person emails are already verified, and no scrape units are used. get_usage is free and runs first; large account lists are split across five-hour windows (Solo allows 500 search records per five hours and 2,500 per week). On 429 the skill waits for Retry-After or stops at a weekly limit, using Idempotency-Keys so retries never double-count. The free plan's 1,000 one-time records are shared across search and enrichment and do not refill, so a recurring watch needs a paid plan.
 
 ## What it doesn't do
 

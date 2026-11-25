@@ -29,6 +29,7 @@ These apply on top of the steps below.
 
 - **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
 - **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **What people search counts.** In `search_people`, each person is 1 search record and their company another; pass `include_company: false` for people only. Work emails come only with `include_emails: true` (or `has_verified_email: true`) and use 1 enrichment record each.
 - **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
 - **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
 - **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
@@ -56,7 +57,7 @@ These apply on top of the steps below.
 1. **Confirm signal roles and buyers**
    Restate the signal roles, the lookback window and the buyer persona in one short list. Map each signal role to the team leader who would own the purchase (for example SDR postings map to function revenue, seniority vp or head). Ask one question only if the mapping is ambiguous. Dedupe and normalise the domain list (lowercase, strip protocol and paths).
 2. **Check limits and scrape units** · `get_usage`
-   Call get_usage. Read scrape_units, search records left in the five-hour window and this week, and concurrent searches. scrape_jobs is not available on the free plan: if no scrape units are available, stop and tell the user that scraping is a paid add-on in units before spending any search records. Estimate the run as roughly one scrape unit per careers page plus up to 3 search records per hiring account. If the estimate exceeds what is left, process the domains that fit now and report the rest as queued for the next window.
+   Call get_usage. Read scrape_units, search records left in the five-hour window and this week, and concurrent searches. scrape_jobs is not available on the free plan: if no scrape units are available, stop and tell the user that scraping is a paid add-on in units before spending any search records. Estimate the run as roughly one scrape unit per careers page plus up to 6 search records (person and company) and 3 enrichment records per hiring account. If the estimate exceeds what is left, process the domains that fit now and report the rest as queued for the next window.
 3. **Probe one careers page** · `scrape_jobs`
    Call scrape_jobs on the first domain only. Check that roles come back with titles and dates, and that your title matching catches the signal roles (fuzzy variants such as "Sales Development Representative" for SDR). Adjust the matching before moving on. If the probe returns no careers data, try the next domain rather than assuming the tool failed.
 4. **Scrape careers pages for hiring signals** · `scrape_jobs`
@@ -64,7 +65,7 @@ These apply on top of the steps below.
 5. **Probe the people search** · `search_people`
    For the first signal account, call search_people with company_domain set to that domain, the buyer function and seniority, and limit 1. Confirm the match_reasons fit the persona and the company domain matches. Widen titles or seniority if the result is empty; an empty search uses no records.
 6. **Find who to contact at each hiring account** · `search_people`
-   Call search_people for the signal accounts, passing their domains in company_domain with the confirmed function and seniority and limit set to about 3 per account. Stay within the plan's concurrent search limit (3 on Solo, 5 on Pro, 8 on Team and Max); on 429 too_many_concurrent wait for a running search to finish. Keep match_reasons and any email with its status and checked_at as returned. Use has_verified_email true only if the user asked for verified contacts only.
+   Call search_people for the signal accounts, passing their domains in company_domain with the confirmed function and seniority and limit set to about 3 per account, and include_emails: true. Stay within the plan's concurrent search limit (3 on Solo, 5 on Pro, 8 on Team and Max); on 429 too_many_concurrent wait for a running search to finish. Keep match_reasons and any email with its status and checked_at as returned. Use has_verified_email true only if the user asked for verified contacts only.
 7. **Rank and return**
    Rank signal accounts by number of matching roles, then by most recent posting date. Build the output table, separate no-signal accounts, and call get_usage again to report scrape units and search records used. Write to the chosen destination through the agent's own connection to Google Sheets or as a CSV.
 
@@ -96,7 +97,7 @@ Illustrative output.
 
 ## Cost and limits
 
-scrape_jobs uses 1 scrape unit per page read; scraping is an add-on on paid plans (packs of 1k, 5k or 20k units) and is not available on Free, so the skill checks scrape units with get_usage before anything else. search_people uses 1 search record per person returned and 1 request per call; empty searches use no records. get_usage is free and is called at the start and end. The skill probes with one domain and a limit 1 search before scaling, caps contacts per account, respects concurrent search limits, and on 429 waits for Retry-After (blocked calls count against nothing). If a run would cross the five-hour or weekly window, it finishes the domains that fit and lists the rest for the next window.
+scrape_jobs uses 1 scrape unit per page read; scraping is an add-on on paid plans (packs of 1k, 5k or 20k units) and is not available on Free, so the skill checks scrape units with get_usage before anything else. search_people uses 2 search records per person returned (the person and their company) and, with include_emails: true, 1 enrichment record per email returned and 1 request per call; empty searches use no records. get_usage is free and is called at the start and end. The skill probes with one domain and a limit 1 search before scaling, caps contacts per account, respects concurrent search limits, and on 429 waits for Retry-After (blocked calls count against nothing). If a run would cross the five-hour or weekly window, it finishes the domains that fit and lists the rest for the next window.
 
 ## What it doesn't do
 

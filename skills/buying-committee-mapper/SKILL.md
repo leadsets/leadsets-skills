@@ -29,6 +29,7 @@ These apply on top of the steps below.
 
 - **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
 - **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **What people search counts.** In `search_people`, each person is 1 search record and their company another; pass `include_company: false` for people only. Work emails come only with `include_emails: true` (or `has_verified_email: true`) and use 1 enrichment record each.
 - **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
 - **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
 - **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
@@ -60,7 +61,7 @@ These apply on top of the steps below.
 3. **Probe the account** · `search_people`
    Call search_people with company_domain set to the account domain and limit 1. If it returns nothing, the domain may be wrong or not covered: confirm the domain with the user instead of widening filters blindly. An empty result uses no records.
 4. **Search each missing role** · `search_people`
-   For each uncovered role, call search_people with company_domain, the role's function and seniority enums (c_level, vp, head, director, manager, ic) and optional title strings, limit 10 to 25. Respect the plan's concurrent search limit (3 on Solo, 5 on Pro); on 429 too_many_concurrent or window_full, wait for Retry-After and retry with the same Idempotency-Key (REST API). Keep match_reasons for every result.
+   For each uncovered role, call search_people with company_domain, the role's function and seniority enums (c_level, vp, head, director, manager, ic) and optional title strings, limit 10 to 25. Pass include_company: false, since the company is already known. Respect the plan's concurrent search limit (3 on Solo, 5 on Pro); on 429 too_many_concurrent or window_full, wait for Retry-After and retry with the same Idempotency-Key (REST API). Keep match_reasons for every result.
 5. **Pick and rank stakeholders**
    Drop anyone already on the deal (match by name and email). For each role keep the one or two best fits by seniority, function and match_reasons, up to the max people to add. Prefer people who sit in the same function as or above the current champion. Flag gaps where no one matched.
 6. **Enrich the shortlist** · `enrich_person`
@@ -95,7 +96,7 @@ Illustrative output.
 
 ## Cost and limits
 
-search_people uses 1 search record per person returned and enrich_person 1 enrichment record per person returned; empty results and errors use no records, but every call counts as one request. Emails from enrich_person are already verified, so there is no second verification charge. The skill calls get_usage first for free, probes with a limit 1 search, keeps per-role limits at 25 or fewer, and enriches only the shortlist, so a typical account uses well under 100 search records and under 10 enrichment records. It works on the free plan's 1,000 one-time records; if they run out the API returns 402 free_records_exhausted and the skill stops and asks the user to upgrade. It stays within the plan's concurrent search limit and waits out 429s using Retry-After. No scraping, so no scrape units.
+search_people uses 1 search record per person returned (include_company: false) and enrich_person 1 enrichment record per person returned; empty results and errors use no records, but every call counts as one request. Emails from enrich_person are already verified, so there is no second verification charge. The skill calls get_usage first for free, probes with a limit 1 search, keeps per-role limits at 25 or fewer, and enriches only the shortlist, so a typical account uses well under 100 search records and under 10 enrichment records. It works on the free plan's 1,000 one-time records; if they run out the API returns 402 free_records_exhausted and the skill stops and asks the user to upgrade. It stays within the plan's concurrent search limit and waits out 429s using Retry-After. No scraping, so no scrape units.
 
 ## What it doesn't do
 

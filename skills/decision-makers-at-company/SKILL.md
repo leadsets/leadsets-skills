@@ -29,6 +29,7 @@ These apply on top of the steps below.
 
 - **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
 - **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **What people search counts.** In `search_people`, each person is 1 search record and their company another; pass `include_company: false` for people only. Work emails come only with `include_emails: true` (or `has_verified_email: true`) and use 1 enrichment record each.
 - **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
 - **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
 - **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
@@ -55,13 +56,13 @@ These apply on top of the steps below.
 1. **Confirm the account and the buyer**
    Restate the domain and translate what the user sells into search filters: one or two function values (revenue, marketing, engineering, product, ops, finance, hr), seniority levels (c_level, vp, head, director, manager) and a few likely titles. Ask one question only if the domain or the buying team is ambiguous.
 2. **Check limits** · `get_usage`
-   Call get_usage. Confirm at least 1 enrichment record and enough search records for the target count plus a 1-record probe. If the free records are nearly gone or a window is full, tell the user what is left and when it resets before spending anything.
+   Call get_usage. Confirm at least 1 enrichment record and enough search records for the target count plus a 2-record probe, and 1 enrichment record per email. If the free records are nearly gone or a window is full, tell the user what is left and when it resets before spending anything.
 3. **Profile the company** · `enrich_company`
    Call enrich_company with the domain. Read company name, industry and headcount band. If it returns 404 not_found, stop and ask the user to check the domain. Use the headcount band to set seniority depth: under 50 people, search c_level and head; 50 to 500, add vp and director; larger, add director and manager in the buying function.
 4. **Probe the filters** · `search_people`
    Call search_people with company_domain [domain], the chosen function and seniority, and limit 1. Check that the result is at the right company and that match_reasons include function or title. If it is empty (0 records used), widen seniority by one level or swap function for title before going further.
 5. **Pull the buying group** · `search_people`
-   Call search_people with the same filters and limit set to about 1.5 times the target count, capped at 100. Use next_cursor only if the first page is short of the target. On 429 window_full or too_many_concurrent, wait for Retry-After and retry once. Do not run a second broad search of the whole company.
+   Call search_people with the same filters and limit set to about 1.5 times the target count, capped at 100, include_company: false (the company is already known) and include_emails: true. Use next_cursor only if the first page is short of the target. On 429 window_full or too_many_concurrent, wait for Retry-After and retry once. Do not run a second broad search of the whole company.
 6. **Rank the people**
    Assign each person a deal role: economic buyer (owns the budget for what you sell), champion (runs the team that uses it day to day) or influencer (adjacent function or more junior). Rank by deal role, then seniority, then title fit, then email status (verified above catch-all above unknown above none). Write a one-line reason per person from their match_reasons and title. Drop people clearly outside the buying function.
 7. **Deliver the list**
@@ -95,7 +96,7 @@ Illustrative output.
 
 ## Cost and limits
 
-enrich_company uses 1 enrichment record, counted only if company data comes back. search_people uses 1 search record per person returned, so a 1-record probe plus a 15-record pull costs 16 search records; an empty search costs 0 records and 1 request. get_usage is free. No scrape units are used, so the skill runs on the free plan's 1,000 one-time records and fits easily inside Solo's 500 search records per five hours. On 429 the blocked call counts against nothing; the skill waits for Retry-After. On 402 free_records_exhausted it stops and asks the user to upgrade.
+enrich_company uses 1 enrichment record, counted only if company data comes back. search_people uses 1 search record per person returned (include_company: false) and, with include_emails: true, 1 enrichment record per email returned, so the probe (2 with its company) plus a 15-person pull costs 17 search records and up to 15 enrichment records; an empty search costs 0 records and 1 request. get_usage is free. No scrape units are used, so the skill runs on the free plan's 1,000 one-time records and fits easily inside Solo's 500 search records per five hours. On 429 the blocked call counts against nothing; the skill waits for Retry-After. On 402 free_records_exhausted it stops and asks the user to upgrade.
 
 ## What it doesn't do
 

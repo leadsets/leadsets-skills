@@ -29,6 +29,7 @@ These apply on top of the steps below.
 
 - **Pages, not giant calls.** `search_people` and `search_companies` return at most 100 records per call (`limit` 1 to 100). Page with `next_cursor` for more.
 - **Probe before spending.** Run a large search with `limit: 1` first and check the record really matches (company, title, size, country). If it doesn't, fix the filters before spending more records.
+- **What people search counts.** In `search_people`, each person is 1 search record and their company another; pass `include_company: false` for people only. Work emails come only with `include_emails: true` (or `has_verified_email: true`) and use 1 enrichment record each.
 - **Rate limits.** On `429 window_full` or `too_many_concurrent`: if `Retry-After` is under 60 seconds, wait and retry the same call once. Otherwise stop, save what's done, and tell the user what's left and when the window resets (`resets_at`). On `weekly_limit`, stop and report where to resume. On `402 free_records_exhausted`, stop and ask the user to upgrade.
 - **Retries never double-count.** Over MCP, just retry the same call. Over the REST API, send an `Idempotency-Key` on every paid call and reuse it on retries.
 - **Only confirmed emails are verified.** Treat an email as verified only when `enrich_person` or `verify_email` returned `status: verified` for it. Search listings and old CRM values don't count. Keep catch-all, unknown and invalid separate, never rounded up.
@@ -55,7 +56,7 @@ These apply on top of the steps below.
 1. **Confirm the source and the campaign**
    Restate the ICP or list, the target count and the LinkedCamp campaign name. Confirm the agent can reach LinkedCamp through its own connection and read the campaign's current leads. Ask one question only if the roles, region or campaign are ambiguous.
 2. **Check limits and plan the run** · `get_usage`
-   Call get_usage (free). Read search records left in the 5-hour window and week, enrichment records left, and reset times. Plan roughly 1 search record and 1 enrichment record per lead. If the run would cross a window or the free records, tell the user and either shrink the batch or split it across windows. Skip the search budget if a list was supplied.
+   Call get_usage (free). Read search records left in the 5-hour window and week, enrichment records left, and reset times. Plan roughly 2 search records (person and company) and 1 enrichment record per lead; has_verified_email adds 1 enrichment record per email. If the run would cross a window or the free records, tell the user and either shrink the batch or split it across windows. Skip the search budget if a list was supplied.
 3. **Probe the filters with one record** · `search_people`
    Only when starting from an ICP. Call search_people with the mapped filters (title, seniority, function, employees, industry, country) and limit 1. Check that the returned person and match_reasons fit the ICP. If the result is empty or off-target, adjust the filters and probe again before spending more records.
 4. **Find the people** · `search_people`
@@ -96,7 +97,7 @@ Illustrative output.
 
 ## Cost and limits
 
-search_people uses 1 search record per person returned and enrich_person 1 enrichment record per person returned; the email it returns is already verified at no extra cost. Empty results and errors use no records, but every call counts as a request. The probe costs at most 1 search record and get_usage costs nothing. On the free plan the 1,000 one-time records are shared by search and enrichment, so a 50-lead run uses about 130. On paid plans the skill checks get_usage first, stays under the plan's concurrent search cap, retries 429 window_full after Retry-After with the same Idempotency-Key (REST API) so nothing is counted twice, and splits large lists across windows. No scrape units are used.
+search_people uses 2 search records per person returned (the person and their company) and enrich_person 1 enrichment record per person returned; the email it returns is already verified at no extra cost. Empty results and errors use no records, but every call counts as a request. The probe costs at most 2 search records and get_usage costs nothing. On the free plan the 1,000 one-time records are shared by search and enrichment, and a 50-lead run uses about 130 search and 65 enrichment records. On paid plans the skill checks get_usage first, stays under the plan's concurrent search cap, retries 429 window_full after Retry-After with the same Idempotency-Key (REST API) so nothing is counted twice, and splits large lists across windows. No scrape units are used.
 
 ## What it doesn't do
 
