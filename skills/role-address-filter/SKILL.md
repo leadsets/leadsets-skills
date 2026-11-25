@@ -21,7 +21,7 @@ Takes a contact list full of info@, sales@ and hello@ addresses and returns one 
 ## Requirements
 
 - The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=role-address-filter)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=role-address-filter)).
+- A Leadsets account. Sign-up is waitlist-only until the public launch on 10 December 2026 ([join the waitlist](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=role-address-filter)). At launch, the free plan will include 1,000 enrichments and 100 search records, no card.
 
 ## Rules for every run
 

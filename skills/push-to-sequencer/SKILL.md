@@ -21,7 +21,7 @@ Takes a prospect list you already have, verifies every address, and hands Instan
 ## Requirements
 
 - The Leadsets MCP server connected to your agent: `https://mcp.leadsets.ai` ([setup](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=push-to-sequencer)), or a Leadsets API key for the REST API.
-- A Leadsets account. The free plan includes 1,000 records, no card ([get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=push-to-sequencer)).
+- A Leadsets account. Sign-up is waitlist-only until the public launch on 10 December 2026 ([join the waitlist](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=push-to-sequencer)). At launch, the free plan will include 1,000 enrichments and 100 search records, no card.
 
 ## Rules for every run
 

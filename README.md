@@ -19,7 +19,7 @@ cp -r leadsets-skills/skills/<skill-id> ~/.claude/skills/
 
 **Everything at once:** [leadsets-skills.zip](https://github.com/leadsets/leadsets-skills/releases/download/skills/leadsets-skills.zip)
 
-Skills call Leadsets through its remote MCP server, `https://mcp.leadsets.ai` ([connect your agent](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=readme)). The free plan includes 1,000 records, no card: [get a key](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=readme).
+Skills call Leadsets through its remote MCP server, `https://mcp.leadsets.ai` ([connect your agent](https://www.leadsets.ai/docs/mcp?utm_source=github&utm_medium=leadsets-skills&utm_campaign=readme)). Sign-up is waitlist-only until the public launch on 10 December 2026: [join the waitlist](https://www.leadsets.ai/signup?utm_source=github&utm_medium=leadsets-skills&utm_campaign=readme). At launch, the free plan will include 1,000 enrichments and 100 search records, no card.
 
 ## Skills
 
