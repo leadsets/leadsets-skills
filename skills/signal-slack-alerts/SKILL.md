@@ -95,7 +95,7 @@ Illustrative output.
 
 ## Cost and limits
 
-scrape_jobs uses 1 scrape unit per page and does not touch search or enrichment records; scraping is an add-on on every paid plan, sold in packs of 1,000, 5,000 or 20,000 units, and is not available on Free. enrich_person uses 1 enrichment record per record returned, and the email it returns is already verified at no extra cost; a 404 not_found or empty result uses no records but still counts as one request. get_usage is free and runs first so the skill can size the run. Enrichment has a rolling five-hour window and a weekly limit per plan (for example 1,000 per five hours and 5,000 per week on Solo); if the leader list would cross a window, the skill checks the most important accounts first and defers the rest. On a 429 it waits for Retry-After, and blocked calls count against nothing.
+scrape_jobs uses 1 scrape unit per open role returned (capped with limit) and does not touch search or enrichment records; scraping is an add-on on every paid plan, sold in packs of 1,000, 5,000 or 20,000 units, and is not available on Free. enrich_person uses 1 enrichment record per record returned, and the email it returns is already verified at no extra cost; a 404 not_found or empty result uses no records but still counts as one request. get_usage is free and runs first so the skill can size the run. Enrichment has a rolling five-hour window and a weekly limit per plan (for example 1,000 per five hours and 5,000 per week on Solo); if the leader list would cross a window, the skill checks the most important accounts first and defers the rest. On a 429 it waits for Retry-After, and blocked calls count against nothing.
 
 ## What it doesn't do
 

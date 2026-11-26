@@ -56,7 +56,7 @@ These apply on top of the steps below.
 1. **Confirm inputs and the offer**
    Restate the domain list, what you sell, the roles of interest and the recency window. Dedupe domains and normalise them (strip paths, lowercase). Ask one question if the offer or the domain list is ambiguous. Do not start scraping until the offer is clear enough to judge relevance.
 2. **Check scrape units and plan the run** · `get_usage`
-   Call get_usage (free) and read scrape_units. scrape_jobs costs 1 unit per page, so budget at least one unit per domain and more for careers sites with several pages. If the account is on Free or has no scrape units, stop and tell the user scraping is a paid add-on in unit packs. If units are short, propose the highest-priority subset of domains and ask before continuing.
+   Call get_usage (free) and read scrape_units. scrape_jobs costs 1 unit per open role returned, so set limit (for example 10) and budget up to that many units per domain. If the account is on Free or has no scrape units, stop and tell the user scraping is a paid add-on in unit packs. If units are short, propose the highest-priority subset of domains and ask before continuing.
 3. **Probe with one domain** · `scrape_jobs`
    Call scrape_jobs on the first domain only. Check that roles come back with titles and dates and note whether description text, team or location are present, since that decides how much evidence each pain can cite. Confirm units used from the response. If the probe returns nothing, try the careers page URL directly before moving on.
 4. **Scrape the remaining careers pages** · `scrape_jobs`
@@ -98,7 +98,7 @@ Illustrative output.
 
 ## Cost and limits
 
-scrape_jobs costs 1 scrape unit per page read and uses no search or enrichment records. Scraping is not available on the Free plan; it is an add-on on every paid plan, sold in packs of 1,000, 5,000 or 20,000 units that do not expire while subscribed. get_usage is free and is called before the run and every 25 domains to confirm units remain. The skill probes one domain first so a bad input costs one domain, not the whole list. On a 429 it waits for Retry-After and retries; blocked calls count against nothing. Leadsets reads public careers pages only and respects robots signals, so some pages may return nothing.
+scrape_jobs costs 1 scrape unit per open role returned (capped with limit) and uses no search or enrichment records. Scraping is not available on the Free plan; it is an add-on on every paid plan, sold in packs of 1,000, 5,000 or 20,000 units that do not expire while subscribed. get_usage is free and is called before the run and every 25 domains to confirm units remain. The skill probes one domain first so a bad input costs one domain, not the whole list. On a 429 it waits for Retry-After and retries; blocked calls count against nothing. Leadsets reads public careers pages only and respects robots signals, so some pages may return nothing.
 
 ## What it doesn't do
 

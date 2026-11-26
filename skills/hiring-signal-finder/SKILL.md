@@ -96,7 +96,7 @@ Illustrative output.
 
 ## Cost and limits
 
-scrape_jobs uses 1 scrape unit per page read; scraping is an add-on on paid plans (packs of 1k, 5k or 20k units) and is not available on Free, so the skill checks scrape units with get_usage before anything else. search_people uses 1 search record per person returned and 1 request per call; empty searches use no records. get_usage is free and is called at the start and end. The skill probes with one domain and a limit 1 search before scaling, caps contacts per account, respects concurrent search limits, and on 429 waits for Retry-After (blocked calls count against nothing). If a run would cross the five-hour or weekly window, it finishes the domains that fit and lists the rest for the next window.
+scrape_jobs uses 1 scrape unit per open role returned, capped with limit; scraping is an add-on on paid plans (packs of 1k, 5k or 20k units) and is not available on Free, so the skill checks scrape units with get_usage before anything else. search_people uses 1 search record per person returned and 1 request per call; empty searches use no records. get_usage is free and is called at the start and end. The skill probes with one domain and a limit 1 search before scaling, caps contacts per account, respects concurrent search limits, and on 429 waits for Retry-After (blocked calls count against nothing). If a run would cross the five-hour or weekly window, it finishes the domains that fit and lists the rest for the next window.
 
 ## What it doesn't do
 
