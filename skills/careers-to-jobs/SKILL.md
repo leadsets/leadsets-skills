@@ -93,7 +93,7 @@ Illustrative output.
 
 ## Cost and limits
 
-scrape_jobs uses scrape units, not search or enrichment records: one unit per standard page read, with capped page depth so one domain costs a predictable number of units. Scraping is not available on the Free plan; it is an add-on on every paid plan, with packs of $9 for 1,000, $19 for 5,000 and $49 for 20,000 units that do not expire while subscribed. get_usage is free, so the skill calls it before the run and between batches, probes one domain before scaling, and asks before spending beyond what the remaining units cover. A 429 returns a Retry-After time and the blocked call counts against nothing.
+scrape_jobs uses scrape units, not search or enrichment records: one unit per open role returned, and limit (default 25) caps the roles per domain, so one domain costs at most limit units; a domain with no roles costs nothing. Scraping is not available on the Free plan; it is an add-on on every paid plan, with packs of $9 for 1,000, $19 for 5,000 and $49 for 20,000 units that do not expire while subscribed. get_usage is free, so the skill calls it before the run and between batches, probes one domain before scaling, and asks before spending beyond what the remaining units cover. A 429 returns a Retry-After time and the blocked call counts against nothing.
 
 ## What it doesn't do
 
